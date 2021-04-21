@@ -1,0 +1,43 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+#message_block {
+  display: block;
+  margin-top: 20px;
+  color: red;
+}
+
+#register,
+#login {
+  display: inline-block;
+  vertical-align: top;
+  justify-content: space-evenly;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(217, 217, 217);
+}
+
+#register h2,
+#login h2 {
+  text-align: center;
+}
+
+.login_registration {
+  vertical-align: top;
+  align-items: center;
+}
+
+#small_logo {
+  width: 150px;
+}
+
+.sidebar {
+  display: inline-block;
+  background-color: rgb(217, 217, 217);
+}
+
+.content {
+  display: inline-block;
+}
