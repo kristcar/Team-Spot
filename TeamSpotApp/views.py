@@ -115,3 +115,55 @@ def delete_comment(request, comment_ID):
 
 
 #********************END MESSAGE BOARD*********************
+
+#******************** OPEN ITEM INBOX ********************
+
+def open_items(request):
+  if "user_id" in request.session: 
+    context = {
+      "all_tasks": Task.objects.all(),
+      "current_user": User.objects.get(id = request.session['user_id'])
+    }
+    return render(request, 'openItems.html', context)
+  else:
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+
+def item_page(request, task_ID):
+  if "user_id" in request.session: 
+    context = {
+      "all_tasks": Task.objects.all(),
+      "one_task": Task.objects.get(id = task_id),
+      "current_user": User.objects.get(id = request.session['user_id'])
+    }
+    return render(request, 'item.html', context)
+  else:
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+
+def add_new_item(request):
+  if "user_id" in request.session: 
+    context = {
+      "current_user": User.objects.get(id = request.session['user_id'])
+    }
+    return render(request, 'add_new_item.html', context)
+  else:
+    messages.error(request, "Please log in or register")
+    return redirect('/')  
+
+def create_action_item(request):
+  if request.method == "POST":
+    errors = Task.objects.task_validator(request.POST)
+    if len(errors) > 0:
+      for key, value in errors.items():
+        messages.error(request, value)
+      return redirect('/open_items/add_new_item')
+    else:
+      Task = Task.objects.create(
+        creator = User.objects.get(id = request.session['user_id']),   
+        title = request.POST['title'],      
+        description = request.POST['description'],
+        due_date = request.POST['due_date'])
+      return redirect('/open_items')
+
+#******************* END ITEM INBOX **********************

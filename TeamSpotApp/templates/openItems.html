@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Spot</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="error_block">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      <h2>Action Items</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Created by</th>
+            <th>Date Created</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one_task in all_tasks %}
+          <a href="open_items/item_page/{{one_task.id}}">
+            <tr>
+              <!-- <td>{{one_task.project.name}}</td> -->
+              <td>PLACEHOLDER FOR PROJECT NAME</td>
+              <td>{{one_task.title}}</td>
+              <td>
+                {{one_task_creator.first_name}} {{one_task_creator.last_name}}
+              </td>
+              <td>{{one_task.created_at}}</td>
+              <td>{{one_task.due_date}}</td>
+            </tr>
+          </a>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="open_items/add_new_item">
+        <button class="btn btn-primary">Create New Action Item</button>
+      </a>
+    </div>
+  </body>
+</html>
