@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Assignment</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/inbox">Inbox</a>
+        <a href="/chat">Chat</a>
+        <a href="/team">Team</a>
+        <a href="/projects">Projects</a>
+        <!-- All these links are subject to change -->
+    </div>
+
+    {% for one_project in all_projects %}
+    <!-- Still slightly unsure how the project works with an assignments, so we'll need to change that -->
+
+    <h1>{{one_project.assignment}}</h1>
+    <h2>{{one_project.name}}</h2>
+    <p>From {{one_project.lead.name}}</p>
+    <p>To {{one_project.member.name}}</p>
+    <p>Status: {{one_project.status}}</p>
+    <p>Date Assigned: {{one_project.date_assigned}}</p>
+    <p>Due Date: {{one_project.date_due}}</p>
+    <p>Description: {{one_project.summary}}</p>
+    <p>Response:</p>
+    <form action="/projects/{{ one_project.id }}/response" method="POST">
+        {% csrf_token %}
+        <input type="text" name="response">
+        <button type="submit">Complete</button>
+    </form>
+
+    {% endfor %}
+
+</body>
+
+</html>
