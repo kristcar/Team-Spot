@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Teams</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/inbox">Inbox</a>
+        <a href="/chat">Chat</a>
+        <a href="/team">Team</a>
+        <a href="/projects">Projects</a>
+        <!-- All these links are subject to change -->
+    </div>
+
+    <h1>Project Teams</h1>
+
+    {% for one_project in all_projects %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>{{one_project.name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{one_project.member.name}}<form action="/project/{{ one_project.id }}/remove" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Remove" </form></td>
+                <!-- Wirefram seems to include the creator/lead as one a removable portion -->
+                <!-- We will have to make the creator/lead a member upon creation -->
+            </tr>
+        </tbody>
+    </table>
+
+    {% endfor %}
+    
+</body>
+
+</html>
