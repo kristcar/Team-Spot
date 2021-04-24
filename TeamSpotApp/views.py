@@ -62,3 +62,56 @@ def dashboard(request):
     "current_user": User.objects.get(id = request.session['user_id']),
   }
   return render(request, 'dashboard.html', context)
+
+
+#********************MESSAGE BOARD*********************
+def chat(request):
+  if "user_id" in request.session: 
+    context = {
+      "all_messages": Message.objects.all(),
+      "current_user": User.objects.get(id = request.session['user_id'])
+    }
+    return render(request, 'chat.html', context)
+  else:
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+
+
+def post_message(request):
+  if request.method == "POST":
+    errors = Message.objects.message_validator(request.POST)
+    if len(errors) > 0:
+      for key, value in errors.items():
+        messages.error(request, value)
+    else: 
+      message = Message.objects.create(message = request.POST['message'], poster = User.objects.get(id = request.session['user_id']))
+  return redirect('/chat')
+
+def post_comment(request, message_ID):
+  if request.method == "POST":
+    errors = Comment.objects.comment_validator(request.POST)
+    if len(errors) > 0:
+      for key, value in errors.items():
+        messages.error(request, value)
+    else:
+      comment = Comment.objects.create(
+        comment = request.POST['comment'], 
+        poster = User.objects.get(id = request.session['user_id']),        
+        post = Message.objects.get(id = message_ID) 
+        )
+  return redirect('/chat')
+
+def delete(request, message_ID):
+  if request.method == "POST":
+    message_to_delete = Message.objects.get(id = message_ID)
+    message_to_delete.delete()
+  return redirect('/chat')
+
+def delete_comment(request, comment_ID):
+
+  comment_to_delete = Comment.objects.get(id = comment_ID)
+  comment_to_delete.delete()
+  return redirect('/chat')
+
+
+#********************END MESSAGE BOARD*********************

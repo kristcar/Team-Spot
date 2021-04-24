@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Wall</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div id="error_block">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <div class="header d-flex justify-content-between">
+      <h3>Chat</h3>
+      <h6>Welcome, {{current_user.first_name}}!</h6>
+
+      <form action="/logout" method="GET">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link">Log Out</button>
+      </form>
+    </div>
+
+    <div class = "message">
+      <form action="/chat/postMessage" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="message">Post a Message</label>
+          <input type="text" name="message" class="form-control" />
+          <button type="submit" class="btn btn-primary">Post Message</button>
+        </div>
+      </form>
+
+      {% for message in all_messages reversed%}
+        <p><strong>{{message.message}}</p></strong>
+        <p><i>
+          Posted by: <a href = "/profile/{{message.poster.id}}" > {{message.poster.first_name}} {{message.poster.last_name}}</a> on
+          {{message.created_at}}
+        </p></i>
+
+        {% if message.poster.id == request.session.user_id %}
+          <form action="/delete/{{message.id}}" , method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm mb-2">Delete Message</button>
+          </form>
+        {% endif %}
+
+        <div class = "comment ml-3">
+          {% for comment in message.message_comment.all %}
+            <p>{{comment.comment}}</p>
+            <p><i>
+              Commented by: <a href = "/profile/{{comment.poster.id}}"> {{comment.poster.first_name}} {{comment.poster.last_name}}</a> on
+              {{comment.created_at}}
+            </p></i>
+            
+            {% if comment.poster.id == request.session.user_id %}
+              <form action="/delete_comment/{{comment.id}}" , method="POST">
+                {% csrf_token %}
+                <input type = "hidden" name = "comment_id" value = "{{comment.id}}">
+                <button type="submit" class="btn btn-danger btn-sm mb-2">Delete Comment</button>
+              </form>
+
+            {% endif %}
+          {% endfor %} 
+        </div>
+
+          <form action="/chat/postComment/{{message.id}}" , method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="comment">Post a Comment</label>
+              <input type="text" name="comment" class="form-control" />
+              <button type="submit" class="btn btn-success btn-sm mb-2">Post Comment</button>
+            </div>
+          </form>  
+
+      {% endfor %}    
+    </div>
+      
+  </body>
+</html>

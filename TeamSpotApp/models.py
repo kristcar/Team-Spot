@@ -1,6 +1,7 @@
 from django.db import models
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 #*********************LOGIN AND REGISTRATION***********************
@@ -55,3 +56,34 @@ class User(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now = True)
   objects = UserManager()
+
+class MessageManager(models.Manager):
+  def message_validator(self, postData):
+    errors = {}
+    if len(postData['message']) < 1:
+      errors['message_blank'] = "Cannot post blank message"
+    return errors
+
+class Message(models.Model):
+  poster = models.ForeignKey(User, related_name = "user_message", on_delete = models.CASCADE, null=True)
+  message = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now = True)
+  objects = MessageManager()
+
+
+class CommentManager(models.Manager):
+  def comment_validator(self, postData):
+    errors = {}
+    if len(postData['comment']) < 1:
+      errors['comment_blank'] = "Cannot post blank comment"
+    return errors 
+
+
+class Comment(models.Model):
+  poster = models.ForeignKey(User, related_name = "user_comment", on_delete = models.CASCADE, null=True)
+  post = models.ForeignKey(Message, related_name = "message_comment", on_delete = models.CASCADE, null=True)
+  comment = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now = True)
+  objects = CommentManager()
