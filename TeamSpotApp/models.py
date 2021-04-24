@@ -113,8 +113,34 @@ class Task(models.Model):
   
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now = True)
-  #project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, null=True)
+  project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, null=True)
   objects = TaskManager()
 #***************************** END ACTION ITEM **********************************#
 
-#BRENDEN TEST
+#**************************** PROJECTS ***************************************#
+
+class ProjectManager(models.Manager):
+    def create_validator(self, postData):
+        errors = {}
+        #validate length of project name
+        if len(postData['name']) < 5:
+            errors['name'] = "A project's name must be at least five characters long."
+        #validate length of project description
+        if len(postData['desc']) < 10:
+            errors['desc'] = "A project's description must be at least ten characters long."
+        #make sure project name is unique to avoid confusion
+        current_projects = Project.objects.filter(project_name = postData['name'])
+        if len(current_projects) > 0:
+            errors['duplicate'] = "That project name is already in use."
+        return errors
+
+class Project(models.Model):
+    project_name = models.CharField(max_length=255)
+    description = models.TextField()
+    creator = models.ForeignKey(User, related_name="teams_created", on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name="teams_joined")
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    objects = TeamManager()
+
+#***************************** END PROJECTS **********************************#
