@@ -1,147 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
 
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team Spot</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-      crossorigin="anonymous"
-    />
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-    <link href="{% static '/img/favicon.png' %}" rel="icon" />
+<head>
 
-    
-  </head>
-  <body>
-    <div class="container">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Spot</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="{% static '/img/TeamSpotBlueText.png' %}" rel="Team Spot Logo" />
 
-      <a href = "/">
-        <button class = "btn btn-link">Home</button>
-      </a>
 
-      <img
-        src="{% static '/img/TeamSpotLogo.png' %}"
-        alt="Team Spot Logo"
-        id = "small_logo"
-        class="d-flex mx-auto mb-4"
-      />
 
-      <div class="login_registration d-flex justify-content-center m-3">
-        <div class = "guest">
-          <div class="d-flex justify-content-center">
-            <button type="submit" id = "demo" class="btn btn-info" onclick="populate()">Demo</button>
-          </div>
-        </div>
-      </div>
+</head>
 
-      <div id="login_message_block" class = "d-block mx-auto" >
-        {% if messages %}
-        <class="messages">
-          <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id = "login_alert" role="alert">
-            <strong>An error has occurred:</strong>
-            {% for message in messages %}
-            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-              {{ message }}
-            </p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-
-      <div class="login_registration d-flex justify-content-center">
-        <div class="form-group mx-4 align-self-baseline" id="login">
-          <h2>Login</h2>
-          <form action="/login" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="text" id = "email_login" name="email" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" name="password" id = "password_login" class="form-control" />
-            </div>
-            <div class="d-flex justify-content-center">
-              <button type="submit" id = "login_button" class="btn btn-primary">Login</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="form-group mx-4" id="register">
-          <h2>Register</h2>
-          <form action="/register" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="first_name">First Name</label>
-              <input type="text" name="first_name" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="last_name">Last Name</label>
-              <input type="text" name="last_name" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="text" id = "email_register" name="email" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" name="password" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="conf_password">Confirm Password</label>
-              <input
-                type="password"
-                name="conf_password"
-                class="form-control"
-              />
-            </div>
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-          </form>
-        </div>
-      </div>
+<body class="login-body">
+  <div class="log-container">
+    <div class="header">
+      <img src="{% static '/img/TeamSpotBlueText.png' %}" alt="Team Spot Logo" />
+      <button type="submit" id="demo" class="demo_button" onclick="populate()">Demo</button>
     </div>
 
-    <!-- Guest login -->
-    <script type="text/javascript">
-      function populate(){
-        document.getElementById('password_login').value = '12345678';
-        document.getElementById('email_login').value = 'guest@gmail.com';
-        document.getElementById('login_button').click();
-      };
-    </script>
+
+    <div id="" class="">
+      {% if messages %}
+      <class="messages">
+        <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id="login_alert" role="alert">
+          <strong>An error has occurred:</strong>
+          {% for message in messages %}
+          <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+          </p>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="forms">
+      <div class="" id="">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email_login" name="email" class="form-control" placeholder="user@email.com"/>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password_login" class="form-control" placeholder="........"/>
+          </div>
+          <div class="">
+            <button type="submit" id="login_button" class="log_reg_button">Login</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="forms" id="register">
+        <h2>Register</h2>
+        <form action="/register" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" class="form-control" placeholder="John"/>
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" class="form-control" placeholder="Smith"/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email_register" name="email" class="form-control" placeholder="user@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="........" />
+          </div>
+          <div class="form-group">
+            <label for="conf_password">Confirm Password</label>
+            <input type="password" name="conf_password" class="form-control" placeholder="........"/>
+          </div>
+          <div class="">
+            <button type="submit" class="log_reg_button">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guest login -->
+  <script type="text/javascript">
+    function populate() {
+      document.getElementById('password_login').value = '12345678';
+      document.getElementById('email_login').value = 'guest@gmail.com';
+      document.getElementById('login_button').click();
+    };
+  </script>
 
 
-    <!-- only allows emails in lower case to not have errors logging in with case sensitivity  -->
-    <script type="text/javascript">
+  <!-- only allows emails in lower case to not have errors logging in with case sensitivity  -->
+  <script type="text/javascript">
 
-      function forceInputLowercase(e)
-      {
-        var start = e.target.selectionStart;
-        var end = e.target.selectionEnd;
-        e.target.value = e.target.value.toLowerCase();
-        e.target.setSelectionRange(start, end);
-      }
-    
-      document.getElementById("email_login").addEventListener("keyup", forceInputLowercase, false);
-      document.getElementById("email_register").addEventListener("keyup", forceInputLowercase, false);
-    </script>
+    function forceInputLowercase(e) {
+      var start = e.target.selectionStart;
+      var end = e.target.selectionEnd;
+      e.target.value = e.target.value.toLowerCase();
+      e.target.setSelectionRange(start, end);
+    }
+
+    document.getElementById("email_login").addEventListener("keyup", forceInputLowercase, false);
+    document.getElementById("email_register").addEventListener("keyup", forceInputLowercase, false);
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  -->
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+</body>
 
-  </body>
 </html>
