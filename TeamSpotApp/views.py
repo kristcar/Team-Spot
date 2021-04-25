@@ -166,5 +166,5 @@ def create_action_item(request):
         due_date = request.POST['due_date'])
       return redirect('/open_items')
 
-#test
+
 #******************* END ITEM INBOX **********************

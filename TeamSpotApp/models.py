@@ -94,29 +94,6 @@ class Comment(models.Model):
 
 #************************** END MESSAGE BOARD *********************************#
 
-#**************************** ACTION ITEM ***************************************#
-class TaskManager(models.Manager):
-  def task_validator(self, postData):
-    errors = {}
-    if len(postData['title']) < 8 or len(postData['description']) < 8:
-      errors['task_description_short'] = "Task title or description is too short"
-    if postData["due_date"] < datetime.now().strftime("%Y-%m-%d"):
-      errors["due_date_past"] = "Due date must be in the future"
-    return errors
-
-class Task(models.Model):
-  creator = models.ForeignKey(User, related_name = "user_task", on_delete = models.CASCADE)
-  title = models.CharField(max_length = 250);
-  due_date = models.DateTimeField();
-  description = models.CharField(max_length = 1000);
-  # response = models.CharField(max_length = 1000, default = "", blank = True);
-  
-  created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now = True)
-  project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, null=True)
-  objects = TaskManager()
-#***************************** END ACTION ITEM **********************************#
-
 #**************************** PROJECTS ***************************************#
 
 class ProjectManager(models.Manager):
@@ -141,6 +118,31 @@ class Project(models.Model):
     members = models.ManyToManyField(User, related_name="teams_joined")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    objects = TeamManager()
+    #objects = TeamManager()
 
 #***************************** END PROJECTS **********************************#
+
+
+#**************************** ACTION ITEM ***************************************#
+class TaskManager(models.Manager):
+  def task_validator(self, postData):
+    errors = {}
+    if len(postData['title']) < 8 or len(postData['description']) < 8:
+      errors['task_description_short'] = "Task title or description is too short"
+    if postData["due_date"] < datetime.now().strftime("%Y-%m-%d"):
+      errors["due_date_past"] = "Due date must be in the future"
+    return errors
+
+class Task(models.Model):
+  creator = models.ForeignKey(User, related_name = "user_task", on_delete = models.CASCADE)
+  title = models.CharField(max_length = 250);
+  due_date = models.DateTimeField();
+  description = models.CharField(max_length = 1000);
+  # response = models.CharField(max_length = 1000, default = "", blank = True);
+  
+  created_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now = True)
+  project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, null=True)
+  objects = TaskManager()
+#***************************** END ACTION ITEM **********************************#
+
