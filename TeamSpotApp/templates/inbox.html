@@ -1,43 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inbox</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Spot - Chat</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
 </head>
+
 <body>
-    <div class="navbar"> 
-        <a href="/dashboard">Dashboard</a>
-        <a href="/inbox">Inbox</a>
-        <a href="/chat">Chat</a>
-        <a href="/team">Team</a>
-        <a href="/projects">Projects</a>
-        <!-- All these links are subject to change -->
-    </div>
-{% for one_project in all_projects %}       
-<!-- This for loop can be altered  -->
-    <h1>Inbox</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Project</th>
-                <th>From</th>
-                <th>Summary</th>
-                <th>Date Assigned</th>
-                <th>Date Due</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><a href="/one_project/{{ one_project.id }}/view">{{one_project.name}}</a></td>
-                <td><a href="/one_project/{{ one_project.creator.id }}/lead">{{one_project.creator.name}}</a></td>
-                <!-- Whatever Urls we create/models created will fill in above -->
-                <td>{{one_project.summary}}</td>
-                <td>{{one_project.date_assigned}}</td>
-                <td>{{one_project.date_due}}</td>
-            </tr>
-        </tbody>    
-{% endfor %}
-    </table>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <img class="nav-logo" src="{% static '/img/TeamSpotWhiteText.png' %}" alt="Team Spot Logo" />
+            </div>
+
+
+            <!-- Sidebar Links -->
+            <ul class="list-unstyled components">
+                <li><a href="#">Dashboard</a></li>
+                <li class="active"></li>>><a href="/inbox">Inbox</a></li>
+                <li><a href="/open_items">Action Items</a></li>
+                <li><a href="/chat">Chat</a></li>
+                <li><a href="/team">Team</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span></span>
+                    </button>
+
+                </div>
+            </nav>
+
+            <div class="content-header">
+                <h2>Inbox</h2>
+                <h2>Welcome, {{current_user.first_name}}!</h2>
+
+                <form action="/logout" method="GET">
+                    {% csrf_token %}
+                    <button type="submit" class="logout_btn">Log Out</button>
+                </form>
+            </div>
+
+
+
+            {% for one_project in all_projects %}
+            <!-- This for loop can be altered  -->
+            <h1>Inbox</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>From</th>
+                        <th>Summary</th>
+                        <th>Date Assigned</th>
+                        <th>Date Due</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="/one_project/{{ one_project.id }}/view">{{one_project.name}}</a></td>
+                        <td><a href="/one_project/{{ one_project.creator.id }}/lead">{{one_project.creator.name}}</a>
+                        </td>
+                        <!-- Whatever Urls we create/models created will fill in above -->
+                        <td>{{one_project.summary}}</td>
+                        <td>{{one_project.date_assigned}}</td>
+                        <td>{{one_project.date_due}}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous">
+            </script>
+            <!-- Popper.JS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+                integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+                crossorigin="anonymous">
+            </script>
+            <!-- Bootstrap JS -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+                integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+                crossorigin="anonymous">
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                    });
+
+                });
+            </script>
 </body>
+
 </html>
