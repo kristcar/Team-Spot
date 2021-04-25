@@ -69,10 +69,25 @@
 
       <div>
         <h2>{{one_task.title}}</h2>
-        <h6>{{one.task.description}}</h6>
+        <h4>{{one_task.description}}</h4>
       </div>
 
 
+
+      <div>
+        {% if one_task.response == "" %}
+        <h2>Respond:</h2>
+        <form action = "/open_items/item_page/{{one_task.id}}/post_response", method = "POST">
+          {% csrf_token %}
+          <input type="textarea" name = "response">
+          <button class = "btn btn-primary" type = "submit">Submit</button>
+        </form>
+        {% else %}
+        <h2>Response:</h2>
+        <p>{{one_task.response}}</p>
+        <p>{{one_task.updated_at}}</p>
+        {% endif %}
+      </div>
 
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
