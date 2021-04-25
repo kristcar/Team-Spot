@@ -116,7 +116,7 @@ def delete_comment(request, comment_ID):
 
 #********************END MESSAGE BOARD*********************
 
-#******************** OPEN ITEM INBOX ********************
+#******************** OPEN ACTION ITEMS ********************
 
 def open_items(request):
   if "user_id" in request.session: 
@@ -133,7 +133,7 @@ def item_page(request, task_ID):
   if "user_id" in request.session: 
     context = {
       "all_tasks": Task.objects.all(),
-      "one_task": Task.objects.get(id = task_id),
+      "one_task": Task.objects.get(id = task_ID),
       "current_user": User.objects.get(id = request.session['user_id'])
     }
     return render(request, 'item.html', context)
@@ -159,12 +159,37 @@ def create_action_item(request):
         messages.error(request, value)
       return redirect('/open_items/add_new_item')
     else:
-      Task = Task.objects.create(
+      task = Task.objects.create(
         creator = User.objects.get(id = request.session['user_id']),   
         title = request.POST['title'],      
         description = request.POST['description'],
         due_date = request.POST['due_date'])
       return redirect('/open_items')
 
+def delete_action_item(request, task_ID):
+  if "user_id" not in request.session: 
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+  tasks_with_id = Task.objects.filter(id = task_ID)
+  if len(tasks_with_id) == 0: #not in database
+    return redirect('/open_items')
+  if request.method == "POST":
+    task_to_delete=Task.objects.get(id=task_ID)
+    #Verify owner is the person logged in in session for delete permissions:
+    if task_to_delete.creator.id == request.session['user_id']:
+      task_to_delete.delete()
+  return redirect('/open_items')
 
-#******************* END ITEM INBOX **********************
+def post_response(request, task_ID):
+  if "user_id" not in request.session: 
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+  if request.method == "POST":
+    task_to_update=Task.objects.get(id=task_ID)
+    task_to_update.response = request.POST['response']
+    task_to_update.save()
+  return redirect(f'/open_items/item_page/{task_ID}')
+
+
+
+#******************* END ACTION ITEMS  **********************

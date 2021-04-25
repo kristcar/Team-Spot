@@ -114,11 +114,11 @@ class ProjectManager(models.Manager):
 class Project(models.Model):
     project_name = models.CharField(max_length=255)
     description = models.TextField()
-    creator = models.ForeignKey(User, related_name="teams_created", on_delete=models.CASCADE)
-    members = models.ManyToManyField(User, related_name="teams_joined")
+    creator = models.ForeignKey(User, related_name="projects_created", on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name="projects_joined")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    #objects = TeamManager()
+    objects = ProjectManager()
 
 #***************************** END PROJECTS **********************************#
 
@@ -138,7 +138,7 @@ class Task(models.Model):
   title = models.CharField(max_length = 250);
   due_date = models.DateTimeField();
   description = models.CharField(max_length = 1000);
-  # response = models.CharField(max_length = 1000, default = "", blank = True);
+  response = models.CharField(max_length = 1000, default = "", blank = True);
   
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now = True)
