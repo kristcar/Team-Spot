@@ -32,7 +32,7 @@
       <ul class="list-unstyled components">
         <li><a href="#">Dashboard</a></li>
         <li><a href="/inbox">Inbox</a></li>
-        <li><a href="/open_items">Action Items</a></li>
+        <li><a href="/open_items">Tasks</a></li>
         <li><a href="/chat">Chat</a></li>
         <li><a href="/team">Team</a></li>
         <li><a href="/projects">Projects</a></li>
@@ -58,7 +58,7 @@
       </div>
 
     <div>
-      <h2>Add New Item</h2>
+      <h2>Add New Task</h2>
 
       <form action="/create_action_item" , method="POST">
         {% csrf_token %}
@@ -70,6 +70,18 @@
         <div class="form-group">
           <label for="description">Description</label>
           <input type="text" name="description" class="form-control" />
+        </div>
+        <div class = "form-group">
+          <label for="assigned_to">Assigned To</label>
+          <select name="assigned_to" class="form-control" />
+            {% for user in all_users %}
+
+            <option value="{{user.id}}">
+            {{user.first_name}} {{user.last_name}}
+            </option>
+
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group">
           <label for="due_date">Due Date</label>
