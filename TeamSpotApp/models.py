@@ -135,14 +135,16 @@ class TaskManager(models.Manager):
 
 class Task(models.Model):
   creator = models.ForeignKey(User, related_name = "user_task", on_delete = models.CASCADE)
-  title = models.CharField(max_length = 250);
-  due_date = models.DateTimeField();
-  description = models.CharField(max_length = 1000);
-  response = models.CharField(max_length = 1000, default = "", blank = True);
-  
+  title = models.CharField(max_length = 250)
+  due_date = models.DateTimeField()
+  description = models.CharField(max_length = 1000)
+  response = models.CharField(max_length = 1000, default = "", blank = True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now = True)
-  project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, null=True)
+  
+  assigned_to = models.ForeignKey(User, related_name = "assigned_task", on_delete = models.CASCADE, blank = True, null = True)
+
+  project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, blank =True, null = True)
   objects = TaskManager()
 #***************************** END ACTION ITEM **********************************#
 

@@ -14,7 +14,7 @@ urlpatterns = [
   path('delete/<int:message_ID>', views.delete),
   path('delete_comment/<int:comment_ID>', views.delete_comment),
 
-  path('create_action_item', views.create_action_item),
+  path('create_action_item/<int:user_ID>', views.create_action_item),
   path('open_items', views.open_items),
   path('open_items/item_page/<int:task_ID>', views.item_page),
   path('open_items/add_new_item', views.add_new_item),
