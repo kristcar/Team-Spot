@@ -86,44 +86,6 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
-
-<!--             
-      <div class="sub-content">
-        <div id="error_block">
-          {% if messages %}
-          <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-              {{ message }}
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-
-        <div>
-
-          <a href="open_items/add_new_item">
-            <button class="chat-btn">Create New Action Item</button>
-          </a>
-
-          <h2>Open Items</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Title</th>
-                <th>Creator</th>
-                <th>Assigned To</th>
-                <th>Date Created</th>
-                <th>Due Date</th>
-                <th>Status</th>
-                <th>Options</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for one_task in all_tasks %} -->
-
               {% if one_task.response == "" %}
 
               <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
@@ -176,25 +138,6 @@
           <tbody>
             {% for one_task in all_tasks %}
 
-<!--               {% endfor %}
-            </tbody>
-          </table>
-
-          <h2 class="mt-5">Closed Items</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Title</th>
-                <th>Creator</th>
-                <th>Assigned To</th>
-                <th>Date Created</th>
-                <th>Due Date</th>
-                <th>Completed</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for one_task in all_tasks %} -->
 
               {% if one_task.response != "" %}
 

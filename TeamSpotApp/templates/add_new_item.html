@@ -59,7 +59,9 @@
     <div>
       <h2>Add New Task</h2>
 
-      <div class="sub-content">
+    <div class="sub-content">
+      <form action="/create_action_item" , method="POST">
+          {% csrf_token %}
 
         <div class="form-group">
           <label for="title">Task Title</label>
@@ -87,26 +89,7 @@
         </div>
         <button type="submit" class="btn btn-primary mb-3">Submit</button>
       </form>
-    </div>
-
-<!--         <form action="/create_action_item" , method="POST">
-          {% csrf_token %}
-
-          <div class="form-group">
-            <label for="title">Task Title</label>
-            <input type="text" name="title" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" name="description" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="due_date">Due Date</label>
-            <input type="date" name="due_date" class="form-control" />
-          </div>
-          <button type="submit" class="btn btn-primary mb-3">Submit</button>
-        </form>
-      </div> -->
+    </div> 
 
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
