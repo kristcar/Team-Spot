@@ -34,9 +34,10 @@
             <ul class="list-unstyled components">
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="/inbox">Inbox</a></li>
+
                 <li><a href="/open_items">Tasks</a></li>
+
                 <li><a href="/chat">Chat</a></li>
-                <li><a href="/team">Team</a></li>
                 <li class="active"></li>>><a href="/projects">Projects</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
@@ -64,29 +65,29 @@
                     <button type="submit" class="logout_btn">Log Out</button>
                 </form>
             </div>
+            <div class="sub-content">
 
+                {% for one_project in all_projects %}
+                <!-- Still slightly unsure how the project works with an assignments, so we'll need to change that -->
 
-            {% for one_project in all_projects %}
-            <!-- Still slightly unsure how the project works with an assignments, so we'll need to change that -->
+                <h1>{{one_project.assignment}}</h1>
+                <h2>{{one_project.name}}</h2>
+                <p>From {{one_project.lead.name}}</p>
+                <p>To {{one_project.member.name}}</p>
+                <p>Status: {{one_project.status}}</p>
+                <p>Date Assigned: {{one_project.date_assigned}}</p>
+                <p>Due Date: {{one_project.date_due}}</p>
+                <p>Description: {{one_project.summary}}</p>
+                <p>Response:</p>
+                <form action="/projects/{{ one_project.id }}/response" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="response">
+                    <button type="submit">Complete</button>
+                </form>
 
-            <h1>{{one_project.assignment}}</h1>
-            <h2>{{one_project.name}}</h2>
-            <p>From {{one_project.lead.name}}</p>
-            <p>To {{one_project.member.name}}</p>
-            <p>Status: {{one_project.status}}</p>
-            <p>Date Assigned: {{one_project.date_assigned}}</p>
-            <p>Due Date: {{one_project.date_due}}</p>
-            <p>Description: {{one_project.summary}}</p>
-            <p>Response:</p>
-            <form action="/projects/{{ one_project.id }}/response" method="POST">
-                {% csrf_token %}
-                <input type="text" name="response">
-                <button type="submit">Complete</button>
-            </form>
+                {% endfor %}
 
-            {% endfor %}
-
-
+            </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous">

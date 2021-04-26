@@ -266,20 +266,20 @@ ul ul a {
   display: flex;
   justify-content: space-between;
   max-height: 50px;
-  width: 97%;
+  width: 95%;
   margin: auto;
   margin-top: 35px;
   margin-bottom: 35px;
 }
 
-.message-board {
+.sub-content {
   width: 95%;
   margin: auto;
 }
 
 .logout_btn {
   background-color: #3445b4;
-  /* width: 100%; */
+  margin: auto 60px;
   padding: 5px;
   color: #fff;
   border: 1px solid #3445b4;
@@ -388,4 +388,19 @@ i a {
 .table {
   width: 95%;
   margin: 15px auto;
+}
+
+
+.ind-item {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #a1e1fe;
+  border-radius: 10px;
+  margin: 15px auto;
+  box-shadow: 0 0 10px rgba(150, 150, 150, 0.5);
+  color: #3445b4;
+}
+
+h3 {
+  color:#3445b4;
 }
