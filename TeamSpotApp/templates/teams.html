@@ -34,7 +34,7 @@
             <ul class="list-unstyled components">
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="/inbox">Inbox</a></li>
-                <li><a href="/open_items">Action Items</a></li>
+                <li><a href="/open_items">Tasks</a></li>
                 <li><a href="/chat">Chat</a></li>
                 <li class="active"></li>>><a href="/team">Team</a></li>
                 <li><a href="/projects">Projects</a></li>
@@ -65,32 +65,32 @@
                 </form>
             </div>
 
+            <div class="sub-content">
+                <h1>Project Teams</h1>
 
-            <h1>Project Teams</h1>
+                {% for one_project in all_projects %}
 
-            {% for one_project in all_projects %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{one_project.name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{one_project.member.name}}<form action="/project/{{ one_project.id }}/remove"
+                                    method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Remove" </form> </td> <!-- Wirefram seems to include the
+                                        creator/lead as one a removable portion -->
+                                    <!-- We will have to make the creator/lead a member upon creation -->
+                        </tr>
+                    </tbody>
+                </table>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{one_project.name}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{one_project.member.name}}<form action="/project/{{ one_project.id }}/remove"
-                                method="POST">
-                                {% csrf_token %}
-                                <input type="submit" value="Remove" </form> </td> <!-- Wirefram seems to include the
-                                    creator/lead as one a removable portion -->
-                                <!-- We will have to make the creator/lead a member upon creation -->
-                    </tr>
-                </tbody>
-            </table>
+                {% endfor %}
 
-            {% endfor %}
-
-
+            </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous">

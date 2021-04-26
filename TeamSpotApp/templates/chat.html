@@ -34,8 +34,8 @@
       <ul class="list-unstyled components">
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/inbox">Inbox</a></li>
+        <li><a href="/open_items">Tasks</a></li>
         <li class="active"></li>><a href="/chat">Chat</a></li>
-        <li><a href="/team">Team</a></li>
         <li><a href="/projects">Projects</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
@@ -78,7 +78,7 @@
         </form>
       </div>
 
-      <div class="message-board">
+      <div class="sub-content">
         <form action="/chat/postMessage" method="POST">
           {% csrf_token %}
           <div class="form-messages">
@@ -96,39 +96,41 @@
                 {{message.poster.last_name}}</a> on
               {{message.created_at}}
           </p></i>
-
-
-          {% if message.poster.id == request.session.user_id %}
-          <form action="/delete/{{message.id}}" , method="POST">
-            {% csrf_token %}
-            <button type="submit" class="chat-btn">Delete Message</button>
-          </form>
         </div>
+
+
+        {% if message.poster.id == request.session.user_id %}
+        <form action="/delete/{{message.id}}" , method="POST">
+          {% csrf_token %}
+          <button type="submit" class="chat-btn">Delete Message</button>
+        </form>
+
         {% endif %}
 
 
-        <div class="comment ml-3">
-          {% for comment in message.message_comment.all %}
-          <div class="comments">
-            <p><strong>{{comment.comment}}</strong></p>
-            <p><i>
-                Commented by: <a href="/profile/{{comment.poster.id}}"> {{comment.poster.first_name}}
-                  {{comment.poster.last_name}}</a> on
-                {{comment.created_at}}
-            </p></i>
 
-
-            {% if comment.poster.id == request.session.user_id %}
-            <form action="/delete_comment/{{comment.id}}" , method="POST">
-              {% csrf_token %}
-              <input type="hidden" name="comment_id" value="{{comment.id}}">
-              <button type="submit" class="chat-btn">Delete Comment</button>
-            </form>
-          </div>
-
-          {% endif %}
-          {% endfor %}
+        {% for comment in message.message_comment.all %}
+        <div class="comments">
+          <p><strong>{{comment.comment}}</strong></p>
+          <p><i>
+              Commented by: <a href="/profile/{{comment.poster.id}}"> {{comment.poster.first_name}}
+                {{comment.poster.last_name}}</a> on
+              {{comment.created_at}}
+          </p></i>
         </div>
+
+
+        {% if comment.poster.id == request.session.user_id %}
+        <form action="/delete_comment/{{comment.id}}" , method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="comment_id" value="{{comment.id}}">
+          <button type="submit" class="chat-btn">Delete Comment</button>
+        </form>
+
+
+        {% endif %}
+        {% endfor %}
+
 
         <form action="/chat/postComment/{{message.id}}" , method="POST">
           {% csrf_token %}
