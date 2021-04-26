@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Spot - Chat</title>
+  <title>Team Spot - Item</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -32,11 +32,10 @@
 
       <!-- Sidebar Links -->
       <ul class="list-unstyled components">
-        <li class="active"></li>><a href="#">Dashboard</a></li>
+        <li><a href="#">Dashboard</a></li>
         <li><a href="/inbox">Inbox</a></li>
-        <li><a href="/open_items">Action Items</a></li>
+        <li><a href="/open_items">Tasks</a></li>
         <li><a href="/chat">Chat</a></li>
-        <li><a href="/team">Team</a></li>
         <li><a href="/projects">Projects</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
@@ -56,7 +55,7 @@
 
 
       <div class="content-header">
-        <h2>Dashboard</h2>
+        <h2>Item</h2>
         <h2>Welcome, {{current_user.first_name}}!</h2>
 
         <form action="/logout" method="GET">
@@ -65,30 +64,30 @@
         </form>
       </div>
 
+      <div class="sub-content">
+
+        <div class="ind-item">
+          <h3>{{one_task.title}}</h3>
+          <h5>{{one_task.description}}</h5>
+        </div>
 
 
-      <div>
-        <h2>{{one_task.title}}</h2>
-        <h4>{{one_task.description}}</h4>
+
+        <div>
+          {% if one_task.response == "" %}
+          <h3>Respond:</h3>
+          <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
+            {% csrf_token %}
+            <input type="textarea" name="response">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </form>
+          {% else %}
+          <h3>Response:</h3>
+          <p>{{one_task.response}}</p>
+          <p>{{one_task.updated_at}}</p>
+          {% endif %}
+        </div>
       </div>
-
-
-
-      <div>
-        {% if one_task.response == "" %}
-        <h2>Respond:</h2>
-        <form action = "/open_items/item_page/{{one_task.id}}/post_response", method = "POST">
-          {% csrf_token %}
-          <input type="textarea" name = "response">
-          <button class = "btn btn-primary" type = "submit">Submit</button>
-        </form>
-        {% else %}
-        <h2>Response:</h2>
-        <p>{{one_task.response}}</p>
-        <p>{{one_task.updated_at}}</p>
-        {% endif %}
-      </div>
-
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

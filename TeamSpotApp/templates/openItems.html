@@ -34,9 +34,8 @@
       <ul class="list-unstyled components">
         <li><a href="#">Dashboard</a></li>
         <li><a href="/inbox">Inbox</a></li>
-        <li class="active"></li>><a href="/open_items">Action Items</a></li>
+        <li class="active"></li>><a href="/open_items">Tasks</a></li>
         <li><a href="/chat">Chat</a></li>
-        <li><a href="/team">Team</a></li>
         <li><a href="/projects">Projects</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
@@ -65,41 +64,41 @@
         </form>
       </div>
 
+      <div class="sub-content">
+        <div id="error_block">
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+              {{ message }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
 
-      <div id="error_block">
-        {% if messages %}
-        <ul class="messages">
-          {% for message in messages %}
-          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-            {{ message }}
-          </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-      </div>
+        <div>
 
-      <div>
+          <a href="open_items/add_new_item">
+            <button class="chat-btn">Create New Action Item</button>
+          </a>
 
-        <a href="open_items/add_new_item">
-          <button class="chat-btn">Create New Action Item</button>
-        </a>
-        
-        <h2>Open Items</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Project</th>
-              <th>Title</th>
-              <th>Creator</th>
-              <th>Assigned To</th>
-              <th>Date Created</th>
-              <th>Due Date</th>
-              <th>Status</th>
-              <th>Options</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for one_task in all_tasks %}
+          <h2>Open Items</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Title</th>
+                <th>Creator</th>
+                <th>Assigned To</th>
+                <th>Date Created</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for one_task in all_tasks %}
               {% if one_task.response == "" %}
 
               <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
@@ -114,46 +113,42 @@
                 <td>{{one_task.due_date}}</td>
                 <td>
                   {% if one_task.response == "" %}
-                  Open 
+                  Open
                   {% else %}
                   Closed
                   {% endif %}
                 </td>
                 <td>
-                {% if current_user == one_task.creator %}
-                <form
-                action="/open_items/delete/{{one_task.id}}"
-                ,
-                method="POST"
-                >
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm">
-                  Delete
-                </button>
-                </form>
-                {% endif %}
+                  {% if current_user == one_task.creator %}
+                  <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      Delete
+                    </button>
+                  </form>
+                  {% endif %}
                 </td>
               </tr>
               {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
+              {% endfor %}
+            </tbody>
+          </table>
 
-        <h2 class = "mt-5">Closed Items</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Project</th>
-              <th>Title</th>
-              <th>Creator</th>
-              <th>Assigned To</th>
-              <th>Date Created</th>
-              <th>Due Date</th>
-              <th>Completed</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for one_task in all_tasks %}
+          <h2 class="mt-5">Closed Items</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Title</th>
+                <th>Creator</th>
+                <th>Assigned To</th>
+                <th>Date Created</th>
+                <th>Due Date</th>
+                <th>Completed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for one_task in all_tasks %}
               {% if one_task.response != "" %}
 
               <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
@@ -169,11 +164,12 @@
                 <td>{{one_task.updated_at}}</td>
               </tr>
               {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
+              {% endfor %}
+            </tbody>
+          </table>
 
 
+        </div>
       </div>
 
 
@@ -200,11 +196,11 @@
         });
       </script>
       <script>
-      jQuery(document).ready(function($) {
-        $(".clickable-row").click(function() {
+        jQuery(document).ready(function ($) {
+          $(".clickable-row").click(function () {
             window.location = $(this).data("href");
+          });
         });
-      });
       </script>
 </body>
 

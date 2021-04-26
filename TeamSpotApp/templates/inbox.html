@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team Spot - Chat</title>
+    <title>Team Spot - Inbox</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -34,9 +34,8 @@
             <ul class="list-unstyled components">
                 <li><a href="#">Dashboard</a></li>
                 <li class="active"></li>>><a href="/inbox">Inbox</a></li>
-                <li><a href="/open_items">Action Items</a></li>
+                <li><a href="/open_items">Tasks</a></li>
                 <li><a href="/chat">Chat</a></li>
-                <li><a href="/team">Team</a></li>
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
@@ -64,35 +63,37 @@
                 </form>
             </div>
 
+            <div class="sub-content">
 
+                {% for one_project in all_projects %}
+                <!-- This for loop can be altered  -->
+                <h1>Inbox</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>From</th>
+                            <th>Summary</th>
+                            <th>Date Assigned</th>
+                            <th>Date Due</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/one_project/{{ one_project.id }}/view">{{one_project.name}}</a></td>
+                            <td><a
+                                    href="/one_project/{{ one_project.creator.id }}/lead">{{one_project.creator.name}}</a>
+                            </td>
+                            <!-- Whatever Urls we create/models created will fill in above -->
+                            <td>{{one_project.summary}}</td>
+                            <td>{{one_project.date_assigned}}</td>
+                            <td>{{one_project.date_due}}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
 
-            {% for one_project in all_projects %}
-            <!-- This for loop can be altered  -->
-            <h1>Inbox</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>From</th>
-                        <th>Summary</th>
-                        <th>Date Assigned</th>
-                        <th>Date Due</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="/one_project/{{ one_project.id }}/view">{{one_project.name}}</a></td>
-                        <td><a href="/one_project/{{ one_project.creator.id }}/lead">{{one_project.creator.name}}</a>
-                        </td>
-                        <!-- Whatever Urls we create/models created will fill in above -->
-                        <td>{{one_project.summary}}</td>
-                        <td>{{one_project.date_assigned}}</td>
-                        <td>{{one_project.date_due}}</td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-
+            </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous">

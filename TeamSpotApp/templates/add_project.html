@@ -15,10 +15,10 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-        </script>
+    </script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-        </script>
+    </script>
 </head>
 
 <body>
@@ -32,9 +32,8 @@
             <ul class="list-unstyled components">
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="/inbox">Inbox</a></li>
-                <li><a href="/open_items">Action Items</a></li>
+                <li><a href="/open_items">Tasks</a></li>
                 <li><a href="/chat">Chat</a></li>
-                <li><a href="/team">Team</a></li>
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
@@ -58,48 +57,48 @@
                     <button type="submit" class="logout_btn">Log Out</button>
                 </form>
             </div>
+            <div class="sub-content">
+                <div>
+                    <h2>Create A New Project</h2>
+                    <form action="/create_project" , method="POST">
+                        <!-- Brenden, you can name that path whatever you would like, I just put that there for my own continuity -->
 
-            <div>
-                <h2>Create A New Project</h2>
-                <form action="/create_project" , method="POST">
-                    <!-- Brenden, you can name that path whatever you would like, I just put that there for my own continuity -->
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="project_name">Project Title</label>
+                            <input type="text" name="project_name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" name="description" class="form-control" />
+                        </div>
 
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="project_name">Project Title</label>
-                        <input type="text" name="project_name" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" class="form-control" />
-                    </div>
+                        <!-- this part is only if we add a due date portion of the project class altogether -->
+                        <div class="form-group">
+                            <label for="due_date">Due Date</label>
+                            <input type="date" name="due_date" class="form-control" />
+                        </div>
+                        <!--  -->
 
-                    <!-- this part is only if we add a due date portion of the project class altogether -->
-                    <div class="form-group">
-                        <label for="due_date">Due Date</label>
-                        <input type="date" name="due_date" class="form-control" />
-                    </div>
-                    <!--  -->
-                    
-                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
-                </form>
+                        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                    </form>
 
-
+                </div>
 
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                     crossorigin="anonymous">
-                    </script>
+                </script>
                 <!-- Popper.JS -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
                     integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
                     crossorigin="anonymous">
-                    </script>
+                </script>
                 <!-- Bootstrap JS -->
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
                     integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
                     crossorigin="anonymous">
-                    </script>
+                </script>
 
                 <script type="text/javascript">
                     $(document).ready(function () {
@@ -111,4 +110,5 @@
                     });
                 </script>
 </body>
+
 </html>
