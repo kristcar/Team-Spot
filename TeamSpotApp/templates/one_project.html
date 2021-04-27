@@ -15,10 +15,10 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-    </script>
+        </script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-    </script>
+        </script>
 </head>
 
 <body>
@@ -57,51 +57,47 @@
 
 
             <div class="content-header">
-                <h2>Projects</h2>
-                <h2>Welcome, {{current_user.first_name}}!</h2>
-
                 <form action="/logout" method="GET">
                     {% csrf_token %}
                     <button type="submit" class="logout_btn">Log Out</button>
                 </form>
             </div>
             <div class="sub-content">
-
-                {% for one_project in all_projects %}
-                <!-- Still slightly unsure how the project works with an assignments, so we'll need to change that -->
-<!-- BRENDEN NOTE: I believe this for loop should reference tasks related to the singular project -->
-                <h1>{{one_project.assignment}}</h1>
-                <h2>{{one_project.name}}</h2>
-                <p>From {{one_project.lead.name}}</p>
-                <p>To {{one_project.member.name}}</p>
-                <p>Status: {{one_project.status}}</p>
-                <p>Date Assigned: {{one_project.date_assigned}}</p>
-                <p>Due Date: {{one_project.date_due}}</p>
-                <p>Description: {{one_project.summary}}</p>
+                {% for one_task in all_tasks %}
+                {% if one_task.response == "" %}
+                <h1>{{one_task.title}}</h1>
+                <h2>{{one_task.project}}</h2>
+                <p>From {{one_task.creator.first_name}}</p>
+                <p>To {{one_task.assigned_to.first_name)}}</p>
+                <p>Status: Open</p> 
+                <!-- If they can even see this task, wouldnt it automatically be open? -->
+                <p>Date Assigned: {{one_task.created_at}}</p>
+                <p>Due Date: {{one_task.due_date}}</p>
+                <p>Description: {{one_task.description}}</p>
                 <p>Response:</p>
-                <form action="/projects/{{ one_project.id }}/response" method="POST">
+                <form action="/open_items/item_page/{{ one_task.id }}/post_response" method="POST">
                     {% csrf_token %}
                     <input type="text" name="response">
                     <button type="submit">Complete</button>
                 </form>
-
+                {% endif %}
                 {% endfor %}
 
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous">
-            </script>
+                </script>
             <!-- Popper.JS -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
                 integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
                 crossorigin="anonymous">
-            </script>
+                </script>
             <!-- Bootstrap JS -->
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
                 integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
                 crossorigin="anonymous">
-            </script>
+                </script>
 
             <script type="text/javascript">
                 $(document).ready(function () {

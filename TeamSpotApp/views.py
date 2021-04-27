@@ -61,6 +61,9 @@ def dashboard(request):
     return redirect('/')
   context = {
     "current_user": User.objects.get(id = request.session['user_id']),
+    "all_projects": Project.objects.all(),
+    "all_tasks": Task.objects.all(),
+    "all_projects": Project.objects.all(),
   }
   return render(request, 'dashboard.html', context)
 
@@ -81,8 +84,8 @@ def createProject(request):
             #Creator automatically becomes the first member
             user.projects_joined.add(new_projects)
 
-            return redirect('/dashboard')
-    return redirect('/dashboard')
+            return redirect('/projects')
+    return redirect('/')
 
 def project_detail(request, project_id):
     one_project = Project.objects.get(id=project_id)
@@ -119,6 +122,15 @@ def deleteProject(request, project_id):
         to_delete.delete()
     return redirect('/dashboard')
 
+def all_projects(request):
+  if 'user_id' not in request.session:
+      return redirect('/')
+  context = {
+    "all_projects": Project.objects.all(),
+    "all_users": User.objects.all(),
+    "current_user": User.objects.get(id = request.session['user_id']),
+  }
+  return render(request, 'all_projects.html', context)
 #********************END OF PROJECTS/PROJECT TEAM MEMBERS*********************
 
 
