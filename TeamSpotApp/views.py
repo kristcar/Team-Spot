@@ -64,6 +64,63 @@ def dashboard(request):
   return render(request, 'dashboard.html', context)
 
 
+#********************PROJECTS/PROJECT TEAM MEMBERS*********************
+def createProject(request):
+    if 'user_id' not in request.session:
+        return redirect('/main')
+    if request.method == "POST":
+        errors = Project.objects.create_validator(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect('/dashboard')
+        else:
+            user = User.objects.get(id=request.session['user_id'])
+            new_project = Project.objects.create(project_name = request.POST['name'], description = request.POST['desc'], creator=user)
+            #Creator automatically becomes the first member
+            user.projects_joined.add(new_projects)
+
+            return redirect('/dashboard')
+    return redirect('/dashboard')
+
+def project_detail(request, project_id):
+    one_project = Project.objects.get(id=project_id)
+    this_user = User.objects.filter(id = request.session['user_id'])
+    context = {
+        'user': this_user[0],
+        'project': one_project
+    }
+    return render(request, 'one_project.html', context)
+
+def joinProject(request, project_id):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        one_project = Project.objects.get(id=project_id)
+        this_user = User.objects.get(id=request.session["user_id"])
+        one_project.members.add(this_user)
+    return redirect(f'/projects/{project_id}')
+
+def leaveProject(request, project_id):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        one_project = Project.objects.get(id=project_id)
+        this_user = User.objects.get(id=request.session["user_id"])
+        one_project.members.remove(this_user)
+    return redirect('/dashboard')
+
+def deleteProject(request, project_id):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        to_delete = Project.objects.get(id=project_id)
+        to_delete.delete()
+    return redirect('/dashboard')
+
+#********************END OF PROJECTS/PROJECT TEAM MEMBERS*********************
+
+
 #********************MESSAGE BOARD*********************
 def chat(request):
   if "user_id" in request.session: 
