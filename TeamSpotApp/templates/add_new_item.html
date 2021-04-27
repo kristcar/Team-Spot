@@ -56,13 +56,34 @@
         </form>
       </div>
 
-    <div>
-      <h2>Add New Task</h2>
+
+      <div id="" class="">
+        {% if messages %}
+        <class="messages">
+          <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id="login_alert" role="alert">
+            <strong>An error has occurred:</strong>
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+              {{ message }}
+            </p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {% endfor %}
+          </div>
+          {% endif %}
+      </div>
+
+
+    
+    <h2>Add New Task</h2>
 
     <div class="sub-content">
-      <form action="/create_action_item" , method="POST">
-          {% csrf_token %}
 
+
+
+      <form action="/create_action_item", method="POST">
+          {% csrf_token %}
         <div class="form-group">
           <label for="title">Task Title</label>
           <input type="text" name="title" class="form-control" />
@@ -70,16 +91,25 @@
         <div class="form-group">
           <label for="description">Description</label>
           <input type="text" name="description" class="form-control" />
-        </div>
-        <div class = "form-group">
-          <label for="assigned_to">Assigned To</label>
-          <select name="assigned_to" class="form-control" />
-            {% for user in all_users %}
-
-            <option value="{{user.id}}">
-            {{user.first_name}} {{user.last_name}}
+        <!-- <div class = "form-group">
+          <label for="project" >Project</label>
+          <select id = "select_project" name="project" class="form-control" />
+            <option value = "1">Project 1</option>
+            <option value = "2">Project 2</option>
+            {% for project in all_projects %}
+            <option value="{{project.id}}">
+              {{project.project_name}} 
             </option>
-
+            {% endfor %}
+          </select>
+        </div>  -->
+        <div class = "form-group">
+          <label for="assigned_to" >Assigned To</label>
+          <select id = "select_assigned" name="assigned_to" class="form-control" />
+            {% for user in all_users %}
+            <option value="{{user.id}}">
+              {{user.first_name}} {{user.last_name}}
+            </option>
             {% endfor %}
           </select>
         </div>
@@ -89,6 +119,23 @@
         </div>
         <button type="submit" class="btn btn-primary mb-3">Submit</button>
       </form>
+
+    <!-- <div class = "form-group">
+      <label for = "project_user_assign">Assign to:</label>
+      <select name = "project_user_options">
+        {% for project in all_projects %}
+        <optgroup label = "{{project.name}}">
+          {% for user in all_users %}
+            {% if user in project.members %}
+              <option value="{{user.id}}">
+                {{user.first_name}} {{user.last_name}}
+              </option>
+            {% endif %}
+          {% endfor %}
+        </optgroup>
+        {% endfor %}
+      </select>
+    </div> -->
     </div> 
 
 
@@ -113,6 +160,8 @@
 
         });
       </script>
+
+
 </body>
 
 </html>

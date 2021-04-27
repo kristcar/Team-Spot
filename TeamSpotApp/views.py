@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 import bcrypt
 from django.db.models import Count
+from .forms import *
 
 #************************LOGIN AND REGISTRATION********************
 
@@ -202,14 +203,15 @@ def add_new_item(request):
   if "user_id" in request.session: 
     context = {
       "current_user": User.objects.get(id = request.session['user_id']),
-      "all_users": User.objects.all()
+      "all_users": User.objects.all(),
+      "all_projects": Project.objects.all(),
     }
     return render(request, 'add_new_item.html', context)
   else:
     messages.error(request, "Please log in or register")
     return redirect('/')  
 
-def create_action_item(request, user_ID):
+def create_action_item(request):
   if request.method == "POST":
     errors = Task.objects.task_validator(request.POST)
     if len(errors) > 0:
@@ -222,7 +224,9 @@ def create_action_item(request, user_ID):
         title = request.POST['title'],      
         description = request.POST['description'],
         due_date = request.POST['due_date'],
-        assigned_to = User.objects.get(id = request.POST['assigned_to']))
+        assigned_to = User.objects.get(id = request.POST['assigned_to']),
+        # project = Project.objects.get(id = project_ID)
+        )
       return redirect('/open_items')
 
 def delete_action_item(request, task_ID):
