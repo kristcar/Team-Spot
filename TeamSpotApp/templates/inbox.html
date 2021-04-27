@@ -55,7 +55,7 @@
 
             <div class="content-header">
                 <h2>Inbox</h2>
-                <h2>Welcome, {{current_user.first_name}}!</h2>
+
 
                 <form action="/logout" method="GET">
                     {% csrf_token %}
@@ -65,33 +65,40 @@
 
             <div class="sub-content">
 
-                {% for one_project in all_projects %}
-                <!-- This for loop can be altered  -->
-                <h1>Inbox</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Project</th>
-                            <th>From</th>
-                            <th>Summary</th>
-                            <th>Date Assigned</th>
-                            <th>Date Due</th>
+              <h2>Assigned to You</h2>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Title</th>
+                    <th>Creator</th>
+                    <th>Assigned To</th>
+                    <th>Date Created</th>
+                    <th>Due Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for one_task in all_tasks %}
+                    {% if one_task.response == "" %}
+                      {% if one_task.assigned_to == current_user %}
+                        <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                          <!-- <td>{{one_task.project.name}}</td> -->
+                          <td>PLACEHOLDER FOR PROJECT NAME</td>
+                          <td>{{one_task.title}}</td>
+                          <td>
+                            {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                          </td>
+                          <td>
+                            {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+                          </td>
+                          <td>{{one_task.created_at}}</td>
+                          <td>{{one_task.due_date}}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="/one_project/{{ one_project.id }}/view">{{one_project.name}}</a></td>
-                            <td><a
-                                    href="/one_project/{{ one_project.creator.id }}/lead">{{one_project.creator.name}}</a>
-                            </td>
-                            <!-- Whatever Urls we create/models created will fill in above -->
-                            <td>{{one_project.summary}}</td>
-                            <td>{{one_project.date_assigned}}</td>
-                            <td>{{one_project.date_due}}</td>
-                        </tr>
-                    </tbody>
-                    {% endfor %}
-                </table>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
 
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -117,6 +124,15 @@
                     });
 
                 });
+            </script>
+
+
+            <script>
+              jQuery(document).ready(function ($) {
+                $(".clickable-row").click(function () {
+                  window.location = $(this).data("href");
+                });
+              });
             </script>
 </body>
 

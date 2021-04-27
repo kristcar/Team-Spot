@@ -256,3 +256,18 @@ def post_response(request, task_ID):
 
 
 #******************* END ACTION ITEMS  **********************
+
+#******************* INBOX  **********************
+
+def inbox(request):
+  if "user_id" not in request.session: 
+    messages.error(request, "Please log in or register")  
+    return redirect('/')
+  context = {
+      "all_tasks": Task.objects.all(),
+      "all_projects": Project.objects.all(),
+      "current_user": User.objects.get(id = request.session['user_id'])
+    }
+  return render(request, 'inbox.html', context)
+
+#******************* END INBOX **********************
