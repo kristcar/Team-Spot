@@ -28,5 +28,7 @@ urlpatterns = [
   path('open_items/delete/<int:task_ID>', views.delete_action_item),
   path('open_items/item_page/<int:task_ID>/post_response', views.post_response),
 
+  path('inbox', views.inbox),
+
   path('<url>', views.catch_all),
 ]

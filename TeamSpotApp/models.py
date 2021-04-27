@@ -130,7 +130,7 @@ class TaskManager(models.Manager):
     if len(postData['title']) < 8 or len(postData['description']) < 8:
       errors['task_description_short'] = "Task title or description is too short"
     if postData["due_date"] < datetime.now().strftime("%Y-%m-%d"):
-      errors["due_date_past"] = "Due date must be in the future"
+      errors["due_date_past"] = "Please select a due date in the future"
     return errors
 
 class Task(models.Model):
