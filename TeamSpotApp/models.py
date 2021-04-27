@@ -2,7 +2,7 @@ from django.db import models
 import re
 from datetime import datetime, timedelta
 from django.utils import timezone
-
+from django import forms
 
 #*********************LOGIN AND REGISTRATION***********************
 class UserManager(models.Manager):
@@ -143,8 +143,8 @@ class Task(models.Model):
   updated_at = models.DateTimeField(auto_now = True)
   
   assigned_to = models.ForeignKey(User, related_name = "assigned_task", on_delete = models.CASCADE, blank = True, null = True)
+  # assigned_to = forms.ChoiceField();
 
   project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, blank =True, null = True)
   objects = TaskManager()
 #***************************** END ACTION ITEM **********************************#
-
