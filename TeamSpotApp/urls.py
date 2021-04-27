@@ -8,7 +8,7 @@ urlpatterns = [
   path('logout', views.logout),
   path('dashboard', views.dashboard),
 
-  path('create_project', views.createProject),
+  path('add_project', views.addProject),
   path('projects/<int:project_id>', views.project_detail),
   path('projects/join/<int:project_id>', views.joinProject),
   path('projects/leave/<int:project_id>', views.leaveProject),
