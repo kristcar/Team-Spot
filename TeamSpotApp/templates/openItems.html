@@ -89,8 +89,7 @@
               {% if one_task.response == "" %}
 
               <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                <!-- <td>{{one_task.project.name}}</td> -->
-                <td>PLACEHOLDER FOR PROJECT NAME</td>
+                <td>{{one_task.project.project_name}}</td>
                 <td>{{one_task.title}}</td>
                 <td>
                   {{one_task.creator.first_name}} {{one_task.creator.last_name}}
@@ -144,8 +143,8 @@
               {% if one_task.response != "" %}
 
               <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                <!-- <td>{{one_task.project.project_name}}</td> -->
-                <td>PLACEHOLDER FOR PROJECT NAME</td>
+                <td>{{one_task.project.project_name}}</td>
+
                 <td>{{one_task.title}}</td>
                 <td>
                   {{one_task.creator.first_name}} {{one_task.creator.last_name}}
@@ -154,6 +153,7 @@
                 <td>{{one_task.created_at}}</td>
                 <td>{{one_task.due_date}}</td>
                 <td>{{one_task.updated_at}}</td>
+                
               </tr>
               {% endif %}
               {% endfor %}
