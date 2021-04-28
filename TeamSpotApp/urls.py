@@ -8,12 +8,13 @@ urlpatterns = [
   path('logout', views.logout),
   path('dashboard', views.dashboard),
 
+  path('projects', views.all_projects),
+  path('create_project', views.createProject),
   path('add_project', views.addProject),
   path('projects/<int:project_id>', views.project_detail),
   path('projects/join/<int:project_id>', views.joinProject),
   path('projects/leave/<int:project_id>', views.leaveProject),
   path('projects/delete/<int:project_id>', views.deleteProject),
-  path('projects', views.all_projects),
 
   path('chat', views.chat),
   path('chat/postMessage', views.post_message),

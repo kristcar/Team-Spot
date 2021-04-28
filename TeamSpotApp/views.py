@@ -80,19 +80,19 @@ def addProject(request):
 
 def createProject(request):
     if 'user_id' not in request.session:
-        return redirect('/main')
+        return redirect('/')
     if request.method == "POST":
         errors = Project.objects.create_validator(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('/dashboard')
+            return redirect('/add_project')
         else:
             user = User.objects.get(id=request.session['user_id'])
             new_project = Project.objects.create(project_name = request.POST['name'], description = request.POST['desc'], creator=user)
             #Creator automatically becomes the first member
-            user.projects_joined.add(new_projects)
-
+            # user.projects_joined.add(new_projects)
+            user.projects_joined.add(new_project)
             return redirect('/projects')
     return redirect('/')
 
@@ -101,7 +101,10 @@ def project_detail(request, project_id):
     this_user = User.objects.filter(id = request.session['user_id'])
     context = {
         'user': this_user[0],
-        'project': one_project
+        'project': one_project,
+        "one_project" : Project.objects.get(id=project_id),
+        "current_user" : User.objects.filter(id = request.session['user_id']),
+        "all_projects": Project.objects.all()
     }
     return render(request, 'one_project.html', context)
 
@@ -201,6 +204,7 @@ def open_items(request):
   if "user_id" in request.session: 
     context = {
       "all_tasks": Task.objects.all(),
+      "all_projects": Project.objects.all(),
       "current_user": User.objects.get(id = request.session['user_id'])
     }
     return render(request, 'openItems.html', context)
@@ -246,7 +250,7 @@ def create_action_item(request):
         description = request.POST['description'],
         due_date = request.POST['due_date'],
         assigned_to = User.objects.get(id = request.POST['assigned_to']),
-        # project = Project.objects.get(id = project_ID)
+        project = Project.objects.get(id = request.POST['project_assign']),
         )
       return redirect('/open_items')
 

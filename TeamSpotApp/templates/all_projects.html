@@ -64,26 +64,32 @@
                 </form>
             </div>
 
-            <a href = "/create_project">Create project</a>
+            <a href = "/add_project">
+              <button class = "btn btn-primary">Create project</button>
+            </a>
+
+
 
             <div class="sub-content">
-                <h1>Project Teams</h1>            
-                <div id=Projects>
+                <h1>Projects</h1>   
+
+                <div id="Projects">
+
                     {% for project in all_projects %}
                         <h4>
+                            <!-- Link to look at each project's details page -->
+                            <a href="/projects/{{ project.id }}">{{ project.project_name }}</a>
                             <!-- Functionality that the creator can delete -->
                             {% if project.creator.id == request.session.user_id %}
                             <form action="/projects/delete/{{project.id}}" method="POST">
                                 {% csrf_token %}
-                                <div class="delete">
-                                    <input type="submit" value="X">
-                                </div>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                  Delete
+                                </button>
                             </form>
                             {% endif %}
-                            <!-- Link to look at each project's details page -->
-                            <a href="/projects/{{ project.id }}">{{ project.project_name }}</a>
                         </h4>
-                        <table>
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>First Name</th>
