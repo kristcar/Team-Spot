@@ -77,21 +77,27 @@
           <button type="submit" class="logout_btn">Log Out</button>
         </form>
       </div>
+      <br>
 
       
       <div class="sub-content">
 
         <h3>Things To Do</h3>
-        {% if task.assigned_to >= 1 %}
-          <p>You have {{task.assigned_to.count}} items assigned to you</p>
-          {% else %}
-          <p>You have 0 items assigned to you</p>
-        {% endif %}
-        
+        <p>You have
+          {% for one_task in all_tasks %}
+            {% if one_task.assigned_to.count >= 1 %}
+             {{one_task.assigned_to.count}}
+            {% else %} 
+              0
+            {% endif %}
+          {% endfor %}
+          items assigned to you.
+        </p>
         <br>
         <br>
 
         <h3>My Projects</h3>
+        <br>
         <table>
           <tbody>
             <tr>
