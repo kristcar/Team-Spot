@@ -36,7 +36,7 @@
                 <li><a href="/inbox">Inbox</a></li>
                 <li><a href="/open_items">Tasks</a></li>
                 <li><a href="/chat">Chat</a></li>
-                <li class="active"></li>>><a href="/team">Projects</a></li>
+                <li class="active"></li>><a href="/team">Projects</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </nav>
@@ -64,51 +64,53 @@
                 </form>
             </div>
 
-            <a href = "/add_project">
-              <button class = "btn btn-primary">Create project</button>
-            </a>
+
 
 
 
             <div class="sub-content">
-                <h1>Projects</h1>   
+                <a href="/add_project">
+                    <button class="chat-btn">Create A New Project</button>
+                </a>
 
-                <div id="Projects">
 
-                    {% for project in all_projects %}
-                        <h4>
-                            <!-- Link to look at each project's details page -->
-                            <a href="/projects/{{ project.id }}">{{ project.project_name }}</a>
-                            <!-- Functionality that the creator can delete -->
-                            {% if project.creator.id == request.session.user_id %}
-                            <form action="/projects/delete/{{project.id}}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                  Delete
-                                </button>
-                            </form>
-                            {% endif %}
-                        </h4>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for one_member in all_members %}
-                                <tr>
-                                    <td>{{one_member.user.first_name}}</td>
-                                    <td>{{one_member.user.last_name}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <p>Members: {{ project.members.count }}</p>
-                        <p>{{project.description}}</p>
-                    {% endfor %}
+                {% for project in all_projects %}
+                <div class="proj-header">
+
+                    <!-- Link to look at each project's details page -->
+                    <h4><a href="/projects/{{ project.id }}">{{ project.project_name }}</a></h4>
+                    <!-- Functionality that the creator can delete -->
+
+
+                    {% if project.creator.id == request.session.user_id %}
+                    <form action="/projects/delete/{{project.id}}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                    {% endif %}
                 </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for one_member in all_members %}
+                        <tr>
+                            <td>{{one_member.user.first_name}}</td>
+                            <td>{{one_member.user.last_name}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Members: {{ project.members.count }}</p>
+                <p>{{project.description}}</p>
+                {% endfor %}
+
 
                 <!-- NOTE FROM BRENDEN: Below is the code that was in here to loop through all projects as one table. If anything I think we should do each project as it's own block with a table of members. -->
                 <!-- {% for one_project in all_projects %}
@@ -125,8 +127,8 @@
                                     {% csrf_token %}
                                     <input type="submit" value="Remove" </form> </td> <!-- Wirefram seems to include the
                                         creator/lead as one a removable portion -->
-                                    <!-- We will have to make the creator/lead a member upon creation -->
-                        <!-- </tr>
+                <!-- We will have to make the creator/lead a member upon creation -->
+                <!-- </tr>
                     </tbody>
                 </table>
 
