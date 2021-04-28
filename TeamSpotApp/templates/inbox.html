@@ -82,8 +82,7 @@
                     {% if one_task.response == "" %}
                       {% if one_task.assigned_to == current_user %}
                         <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                          <!-- <td>{{one_task.project.name}}</td> -->
-                          <td>PLACEHOLDER FOR PROJECT NAME</td>
+                          <td>{{one_task.project.project_name}}</td>
                           <td>{{one_task.title}}</td>
                           <td>
                             {{one_task.creator.first_name}} {{one_task.creator.last_name}}
@@ -110,7 +109,6 @@
                     <th>Assigned To</th>
                     <th>Date Created</th>
                     <th>Due Date</th>
-                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -118,8 +116,7 @@
                     {% if one_task.response == "" %}
                       {% if one_task.creator == current_user %}
                         <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                          <!-- <td>{{one_task.project.name}}</td> -->
-                          <td>PLACEHOLDER FOR PROJECT NAME</td>
+                          <td>{{one_task.project.project_name}}</td>
                           <td>{{one_task.title}}</td>
                           <td>
                             {{one_task.creator.first_name}} {{one_task.creator.last_name}}
@@ -129,13 +126,6 @@
                           </td>
                           <td>{{one_task.created_at}}</td>
                           <td>{{one_task.due_date}}</td>
-                          <td>
-                            {% if one_task.response == "" %}
-                            Open
-                            {% else %}
-                            Closed
-                            {% endif %}
-                          </td>
                         </tr>
                       {% endif %}
                     {% endif %}
