@@ -69,6 +69,15 @@ def dashboard(request):
 
 
 #********************PROJECTS/PROJECT TEAM MEMBERS*********************
+def addProject(request):
+  if "user_id" not in request.session: 
+    messages.error(request, "Please log in or register")
+    return redirect('/')
+  context = {
+    "current_user": User.objects.get(id = request.session['user_id']),
+  }
+  return render(request, 'add_project.html')
+
 def createProject(request):
     if 'user_id' not in request.session:
         return redirect('/main')
