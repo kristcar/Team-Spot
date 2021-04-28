@@ -80,45 +80,31 @@
 
       
       <div class="sub-content">
-        {% for one_task in all_tasks %}
-        <table>
-          <thead>
-            <tr>
-              <th>Things To Do </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                {% if current_user in one_task.assigned_to.all %}
-                You have {{one_task.assigned_to.count}} items assigned to you
-                {% else %}
-                You have 0 items assigned to you
-                {% endif %}
-              </td>              
-            </tr>
-          </tbody>
-        </table>
-        {% endfor %}
-      <br>
 
-        {% for one_project in all_projects %}
+        <h3>Things To Do</h3>
+        {% if task.assigned_to >= 1 %}
+          <p>You have {{task.assigned_to.count}} items assigned to you</p>
+          {% else %}
+          <p>You have 0 items assigned to you</p>
+        {% endif %}
+        
+        <br>
+        <br>
+
+        <h3>My Projects</h3>
         <table>
-          <thead>
-            <tr>
-              <th>My Projects</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
               <td>
-              {% if current_user in one_project.members.all %}
-              {{one_project.project_name}}
-              {% endif %}
+                {% for one_project in all_projects %}
+                  {% if current_user in one_project.members.all %}
+                    {{one_project.project_name}}
+                  {% endif %}
+                {% endfor %}
+              </td>
             </tr>
           </tbody>
         </table>
-        {% endfor %}
       </div>
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
