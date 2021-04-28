@@ -401,6 +401,12 @@ i a {
   color: #3445b4;
 }
 
-h3 {
+h3, h4 {
   color:#3445b4;
+}
+
+.proj-header {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
 }
