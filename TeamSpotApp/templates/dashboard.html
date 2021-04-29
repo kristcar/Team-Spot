@@ -83,21 +83,13 @@
       <div class="sub-content">
 
         <h3>Things To Do</h3>
-        <p>You have
-          {% for one_task in all_tasks %}
-            {% if one_task.assigned_to.count >= 1 %}
-             {{one_task.assigned_to.count}}
-            {% else %} 
-              0
-            {% endif %}
-          {% endfor %}
-          items assigned to you.
+        <br>
+        <p>You have {{current_user.assigned_task.count}} assigned tasks.
         </p>
         <br>
         <br>
 
         <h3>My Projects</h3>
-        <br>
         <table class="table table-striped">
           <tbody>
             <tr>
