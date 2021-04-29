@@ -76,27 +76,31 @@
 
 
         <div>
-          {% if one_task.response == "" %}
-          <h3>Respond:</h3>
-          <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
-            {% csrf_token %}
-            <input type="textarea" name="response">
-            <button class="btn btn-primary" type="submit">Submit</button>
-          </form>
-          {% else %}
-          <h3>Response:</h3>
-            <p>{{one_task.response}}</p>
-            <p>{{one_task.updated_at}}</p>
+          {% if one_task.assigned_to == current_user %}
+            {% if one_task.response == "" %}
+            <h3>Respond:</h3>
+            <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
+              {% csrf_token %}
+              <input type="textarea" name="response">
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+            {% else %}
+            <h3>Response:</h3>
+              <p>{{one_task.response}}</p>
+              <p>{{one_task.updated_at}}</p>
+            {% endif %}
           {% endif %}
         </div>
 
         {% if current_user == one_task.creator %}
-          <form action="/open_items/delete/{{one_task.id}}" , method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger btn-sm">
-              Delete
-            </button>
-          </form>
+          {% if one_task.response == "" %}
+            <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </form>
+          {% endif %}
         {% endif %}
       </div>
 
