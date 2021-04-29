@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Spot - Chat</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <img class="nav-logo" src="{% static '/img/TeamSpotWhiteText.png' %}" alt="Team Spot Logo" />
+            </div>
+
+
+            <!-- Sidebar Links -->
+            <ul class="list-unstyled components">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/inbox">Inbox</a></li>
+                <li><a href="/open_items">Tasks</a></li>
+                <li><a href="/chat">Chat</a></li>
+                <li class="active"></li>><a href="/team">Projects</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span></span>
+                    </button>
+
+                </div>
+            </nav>
+
+
+            <div class="content-header">
+                <h2>Projects</h2>
+                <h2>Welcome, {{current_user.first_name}}!</h2>
+
+                <form action="/logout" method="GET">
+                    {% csrf_token %}
+                    <button type="submit" class="logout_btn">Log Out</button>
+                </form>
+            </div>
+
+
+
+
+
+            <div class="sub-content">
+                <a href="/add_project">
+                    <button class="chat-btn">Create A New Project</button>
+                </a>
+
+
+                {% for project in all_projects %}
+                <div class="proj-header">
+
+                    <!-- Link to look at each project's details page -->
+                    <h4><a href="/projects/{{ project.id }}">{{ project.project_name }}</a></h4>
+                    <!-- Functionality that the creator can delete -->
+
+
+                    {% if project.creator.id == request.session.user_id %}
+                    <form action="/projects/delete/{{project.id}}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                    {% endif %}
+                    {% if user in projects.members.all %}
+                    <form action="/projects/leave/{{ project.id }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            leave
+                        </button>
+                    </form>
+                    {% else %}
+                    <form action="/projects/join/{{ project.id }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Join
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for one_member in all_members %}
+                        <tr>
+                            <td>{{project.members.first_name}}</td>
+                            <td>{{project.members.last_name}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Members: {{ project.members.count }}</p>
+                <p>{{project.description}}</p>
+                {% endfor %}
+
+
+                <!-- NOTE FROM BRENDEN: Below is the code that was in here to loop through all projects as one table. If anything I think we should do each project as it's own block with a table of members. -->
+                <!-- {% for one_project in all_projects %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{one_project.name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{one_project.member.name}}<form action="/project/{{ one_project.id }}/remove"
+                                    method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Remove" </form> </td> <!-- Wirefram seems to include the
+                                        creator/lead as one a removable portion -->
+                <!-- We will have to make the creator/lead a member upon creation -->
+                <!-- </tr>
+                    </tbody>
+                </table>
+
+                {% endfor %} -->
+            </div>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous">
+            </script>
+            <!-- Popper.JS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+                integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+                crossorigin="anonymous">
+            </script>
+            <!-- Bootstrap JS -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+                integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+                crossorigin="anonymous">
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                    });
+
+                });
+            </script>
+
+        </div>
+    </div>
+</body>
+
+</html>
