@@ -125,7 +125,7 @@
                       {% if current_user == one_task.creator %}
                         <form action="/open_items/delete/{{one_task.id}}" , method="POST">
                           {% csrf_token %}
-                          <button type="submit" class="btn btn-danger btn-sm">
+                          <button type="submit" class="delete-btn">
                             Delete
                           </button>
                         </form>
@@ -170,7 +170,7 @@
                       {% if current_user == one_task.creator %}
                       <form action="/open_items/delete/{{one_task.id}}" , method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">
+                        <button type="submit" class="delete-btn">
                           Delete
                         </button>
                       </form>
