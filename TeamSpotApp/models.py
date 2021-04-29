@@ -129,9 +129,10 @@ class TaskManager(models.Manager):
     errors = {}
     if len(postData['title']) < 4 or len(postData['description']) < 4:
       errors['task_description_short'] = "Task title or description is too short"
-    if postData["due_date"] < datetime.now().strftime("%Y-%m-%d"):
+    if postData["due_date"] < datetime.now().strftime("%m-%d-%Y"):
       errors["due_date_past"] = "Please select a due date in the future"
     return errors
+
 
 class Task(models.Model):
   creator = models.ForeignKey(User, related_name = "user_task", on_delete = models.CASCADE)

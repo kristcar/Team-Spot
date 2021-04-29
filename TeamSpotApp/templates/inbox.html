@@ -90,8 +90,8 @@
                           <td>
                             {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
                           </td>
-                          <td>{{one_task.created_at}}</td>
-                          <td>{{one_task.due_date}}</td>
+                          <td>{{one_task.created_at | date:"M d, Y" }}</td>
+                          <td>{{one_task.due_date | date:"M d, Y" }}</td>
                         </tr>
                       {% endif %}
                     {% endif %}

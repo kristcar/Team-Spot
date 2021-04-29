@@ -110,8 +110,8 @@
                     <td>
                       {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
                     </td>
-                    <td>{{one_task.created_at}}</td>
-                    <td>{{one_task.due_date}}</td>
+                    <td>{{one_task.created_at | date:"M d, Y" }}</td>
+                    <td>{{one_task.due_date | date:"M d, Y" }}</td>
                     <td>
                       {% if one_task.response == "" %}
                       Open
@@ -161,11 +161,22 @@
                       {{one_task.creator.first_name}} {{one_task.creator.last_name}}
                     </td>
                     <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
-                    <td>{{one_task.created_at}}</td>
-                    <td>{{one_task.due_date}}</td>
-                    <td>{{one_task.updated_at}}</td>
+                    <td>{{one_task.created_at  | date:"M d, Y" }}</td>
+                    <td>{{one_task.due_date  | date:"M d, Y" }}</td>
+                    <td>{{one_task.updated_at  | date:"M d, Y" }}</td>
                     
+                    <td>
+                      {% if current_user == one_task.creator %}
+                      <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          Delete
+                        </button>
+                      </form>
+                      {% endif %}
+                    </td>
                   </tr>
+                  
                   {% endif %}
                 {% endif %}
               {% endfor %}

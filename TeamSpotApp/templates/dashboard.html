@@ -90,13 +90,6 @@
 
         <h3>My Projects</h3>
         <table class="table table-striped">
-          <!-- <thead>
-            <tr>
-              <th>
-                Name:
-              </th>
-            </tr>
-          </thead> -->
           <tbody>
             {% for one_project in all_projects %}
               {% if current_user in one_project.members.all %}
@@ -138,8 +131,8 @@
                   <td>
                     {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
                   </td>
-                  <td>{{one_task.created_at}}</td>
-                  <td>{{one_task.due_date}}</td>
+                  <td>{{one_task.created_at | date:"M d, Y" }}</td>
+                  <td>{{one_task.due_date | date:"M d, Y" }}</td>
                 </tr>
               {% endif %}
             {% endif %}
@@ -172,8 +165,8 @@
                   <td>
                     {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
                   </td>
-                  <td>{{one_task.created_at}}</td>
-                  <td>{{one_task.due_date}}</td>
+                  <td>{{one_task.created_at | date:"M d, Y" }}</td>
+                  <td>{{one_task.due_date | date:"M d, Y" }}</td>
                 </tr>
               {% endif %}
             {% endif %}
