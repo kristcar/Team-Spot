@@ -104,8 +104,8 @@
             <h3>Respond:</h3>
             <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
               {% csrf_token %}
-              <input type="textarea" name="response">
-              <button class="btn btn-primary" type="submit">Submit</button>
+              <input type="textarea" name="response" class="response-area">
+              <button class="chat-btn" type="submit">Submit</button>
             </form>
             {% endif %}
           {% endif %}
