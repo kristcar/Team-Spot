@@ -407,7 +407,7 @@ h3, h4 {
 
 .proj-header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 20px auto;
   border-top: 1px solid #46bff1;
   padding: 10px 0px;
@@ -417,11 +417,13 @@ h3, h4 {
   display: flex;
   justify-content: space-between;
   width: 325px;
+  
 }
 
 .join-btn {
-  margin: auto;
-}
+  width: 325px;
+  text-align: right;
+} 
 
 .delete-btn {
   background-color: #e40b3b;
@@ -452,4 +454,10 @@ span {
 .sep {
   border-top: 1px solid #46bff1;
   padding: 10px 0px;
+}
+
+h6 {
+  color:#3445b4;
+  text-decoration: underline;
+  margin: auto 15px;
 }

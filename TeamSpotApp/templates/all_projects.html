@@ -99,17 +99,19 @@
                             </form>
                         </div>
                         {% else %}
-                        <form action="/projects/leave/{{project.id}}" , method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="chat-btn">
-                                Leave this Project
-                            </button>
-                        </form>
+                        <div class="join-btn">
+                            <form action="/projects/leave/{{project.id}}" , method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="chat-btn">
+                                    Leave this Project
+                                </button>
+                            </form>
+                        </div>
                         {% endif %}
                     </div>
                     <!-- <p>Members: {{ project.members.count }}</p>
                     <p>{{project.description}}</p> -->
-                    
+
 
                     <!-- {% if user in projects.members.all %}
                     <form action="/projects/leave/{{ project.id }}" method="POST">
@@ -127,7 +129,7 @@
                     </form>
                     {% endif %} -->
                 </div>
-                
+
                 <!-- <table class="table table-striped">
                     <thead>
                         <tr>
@@ -146,7 +148,7 @@
                 </table> -->
                 <p>Members: {{ project.members.count }}</p>
                 <p>{{project.description}}</p>
-                {% endfor %} 
+                {% endfor %}
 
                 <!-- NOTE FROM BRENDEN: Below is the code that was in here to loop through all projects as one table. If anything I think we should do each project as it's own block with a table of members. -->
                 <!-- {% for one_project in all_projects %}
