@@ -5,6 +5,7 @@ import bcrypt
 from django.db.models import Count
 from .forms import *
 
+
 #************************LOGIN AND REGISTRATION********************
 
 def loginRegister(request):

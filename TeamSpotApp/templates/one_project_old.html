@@ -12,6 +12,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -68,8 +69,6 @@
             <div class="sub-content">
 
                 {% for one_project in all_projects %}
-                <!-- Still slightly unsure how the project works with an assignments, so we'll need to change that -->
-<!-- BRENDEN NOTE: I believe this for loop should reference tasks related to the singular project -->
                 <h1>{{one_project.assignment}}</h1>
                 <h2>{{one_project.name}}</h2>
                 <p>From {{one_project.lead.name}}</p>

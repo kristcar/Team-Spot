@@ -10,6 +10,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="{% static '/img/TeamSpotBlueText.png' %}" rel="Team Spot Logo" />
+  <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
 
 
@@ -47,11 +48,11 @@
           {% csrf_token %}
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" id="email_login" name="email" class="form-control" placeholder="user@email.com"/>
+            <input type="text" id="email_login" name="email" class="form-control" placeholder="user@email.com" />
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password_login" class="form-control" placeholder="........"/>
+            <input type="password" name="password" id="password_login" class="form-control" placeholder="........" />
           </div>
           <div class="">
             <button type="submit" id="login_button" class="log_reg_button">Login</button>
@@ -65,11 +66,11 @@
           {% csrf_token %}
           <div class="form-group">
             <label for="first_name">First Name</label>
-            <input type="text" name="first_name" class="form-control" placeholder="John"/>
+            <input type="text" name="first_name" class="form-control" placeholder="John" />
           </div>
           <div class="form-group">
             <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" class="form-control" placeholder="Smith"/>
+            <input type="text" name="last_name" class="form-control" placeholder="Smith" />
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -81,7 +82,7 @@
           </div>
           <div class="form-group">
             <label for="conf_password">Confirm Password</label>
-            <input type="password" name="conf_password" class="form-control" placeholder="........"/>
+            <input type="password" name="conf_password" class="form-control" placeholder="........" />
           </div>
           <div class="">
             <button type="submit" class="log_reg_button">Register</button>
@@ -103,7 +104,6 @@
 
   <!-- only allows emails in lower case to not have errors logging in with case sensitivity  -->
   <script type="text/javascript">
-
     function forceInputLowercase(e) {
       var start = e.target.selectionStart;
       var end = e.target.selectionEnd;
@@ -116,10 +116,8 @@
   </script>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  -->
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
 
 
 
