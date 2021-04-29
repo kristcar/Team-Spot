@@ -57,6 +57,7 @@
 
 
             <div class="content-header">
+                <h1>{{project.project_name}}</h1>
                 <form action="/logout" method="GET">
                     {% csrf_token %}
                     <button type="submit" class="logout_btn">Log Out</button>
@@ -65,6 +66,24 @@
 
             <div>
               <h2>Members</h2>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in all_users %}
+                    {% if user in project.members.all %}
+                      <tr>
+                        <td>{{user.first_name}}</td> 
+                        <td>{{user.last_name}}</td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
 
             <h2>Open Tasks for {{one_project.project_name}}</h2>
@@ -79,11 +98,11 @@
                   <th>Due Date</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody> 
                 {% for one_task in all_tasks %}
                   {% if one_task.project.id == one_project.id %}  
                     {% if one_task.response == "" %}
-                      <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                      <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
                         <td>{{one_task.project.project_name}}</td>
                         <td>{{one_task.title}}</td>
                         <td>
@@ -116,47 +135,25 @@
               </thead>
               <tbody>
                 {% for one_task in all_tasks %}
-                  {% if one_task.response != "" %}
-                    <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                      <td>{{one_task.project.project_name}}</td>
-                      <td>{{one_task.title}}</td>
-                      <td>
-                        {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                      </td>
-                      <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
-                      <td>{{one_task.created_at}}</td>
-                      <td>{{one_task.due_date}}</td>
-                      <td>{{one_task.updated_at}}</td>
-                    </tr>
+                  {% if one_task.project.id == one_project.id %} 
+                    {% if one_task.response != "" %}
+                      <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
+                        <td>{{one_task.project.project_name}}</td>
+                        <td>{{one_task.title}}</td>
+                        <td>
+                          {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                        </td>
+                        <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
+                        <td>{{one_task.created_at}}</td>
+                        <td>{{one_task.due_date}}</td>
+                        <td>{{one_task.updated_at}}</td>
+                      </tr>
+                      {% endif %}
                     {% endif %}
                   {% endfor %}
                 </tbody>
               </table>
     
-
-
-            <!-- <div class="sub-content">
-                {% for one_task in all_tasks %}
-                {% if one_task.response == "" %}
-                <h1>{{one_task.title}}</h1>
-                <h2>{{one_task.project}}</h2>
-                <p>From {{one_task.creator.first_name}}</p>
-                <p>To {{one_task.assigned_to.first_name}}</p>
-                <p>Status: Open</p>  -->
-                <!-- If they can even see this task, wouldnt it automatically be open? -->
-                <!-- <p>Date Assigned: {{one_task.created_at}}</p>
-                <p>Due Date: {{one_task.due_date}}</p>
-                <p>Description: {{one_task.description}}</p>
-                <p>Response:</p>
-                <form action="/open_items/item_page/{{ one_task.id }}/post_response" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="response">
-                    <button type="submit">Complete</button>
-                </form>
-                {% endif %}
-                {% endfor %}
-
-            </div> -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                 crossorigin="anonymous">
@@ -180,6 +177,14 @@
                     });
 
                 });
+            </script>
+
+            <script>
+              jQuery(document).ready(function ($) {
+                $(".clickable-row").click(function () {
+                  window.location = $(this).data("href");
+                });
+              });
             </script>
 </body>
 

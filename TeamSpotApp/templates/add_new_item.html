@@ -103,9 +103,11 @@
           <label for="assigned_to" >Assigned To</label>
           <select id = "select_assigned" name="assigned_to" class="form-control" />
             {% for user in all_users %}
-              <option value="{{user.id}}">
-                {{user.first_name}} {{user.last_name}}
-              </option>
+              {% if user in one_project.members.all %}
+                <option value="{{user.id}}">
+                  {{user.first_name}} {{user.last_name}}
+                </option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>

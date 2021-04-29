@@ -53,9 +53,6 @@
         </div>
       </nav>
 
-
-
-
       <div id="error_block">
         {% if messages %}
         <ul class="messages">
@@ -82,28 +79,101 @@
       
       <div class="sub-content">
 
-        <h3>Things To Do</h3>
+        <h3>To Do</h3>
         <br>
-        <p>You have {{current_user.assigned_task.count}} assigned tasks.</p>
+        <a href = "/inbox">
+          <!-- <p>You have {{current_user.assigned_task.count}} tasks assigned to you.</p> -->
+          <p>Check open tasks assigned to you.</p>
+        </a>
         <br>
         <br>
 
         <h3>My Projects</h3>
         <table class="table table-striped">
           <tbody>
-            <tr>
+            {% for one_project in all_projects %}
+            <tr class='clickable-row' data-href='projects/{{one_project.id}}'>
               <td>
-                {% for one_project in all_projects %}
                   {% if current_user in one_project.members.all %}
                     {{one_project.project_name}}
                   {% endif %}
-                {% endfor %}
-              </td>
+              </td>          
             </tr>
+            {% endfor %}    
           </tbody>
         </table>
-      </div>
+      
+      <br>
+      <h3>My Tasks</h3>
+      <br>
+      <h4>Open Tasks You Created</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Assigned To</th>
+            <th>Date Created</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one_task in all_tasks %}
+            {% if one_task.response == "" %}
+              {% if one_task.creator == current_user %}
+                <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                  <td>{{one_task.project.project_name}}</td>
+                  <td>{{one_task.title}}</td>
+                  <td>
+                    {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                  </td>
+                  <td>
+                    {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+                  </td>
+                  <td>{{one_task.created_at}}</td>
+                  <td>{{one_task.due_date}}</td>
+                </tr>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
 
+      <h4>Closed Tasks You Created</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Assigned To</th>
+            <th>Date Created</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one_task in all_tasks %}
+            {% if one_task.response != "" %}
+              {% if one_task.creator == current_user %}
+                <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                  <td>{{one_task.project.project_name}}</td>
+                  <td>{{one_task.title}}</td>
+                  <td>
+                    {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                  </td>
+                  <td>
+                    {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+                  </td>
+                  <td>{{one_task.created_at}}</td>
+                  <td>{{one_task.due_date}}</td>
+                </tr>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         </script>
@@ -123,6 +193,14 @@
             $('#sidebar').toggleClass('active');
           });
 
+        });
+      </script>
+      
+      <script>
+        jQuery(document).ready(function ($) {
+          $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+          });
         });
       </script>
 </body>
