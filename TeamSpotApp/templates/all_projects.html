@@ -64,10 +64,6 @@
                 </form>
             </div>
 
-
-
-
-
             <div class="sub-content">
                 <a href="/add_project">
                     <button class="chat-btn">Create A New Project</button>
@@ -89,7 +85,21 @@
                             Delete
                         </button>
                     </form>
-                    {% endif %}
+                    {% if user in projects.members.all %}
+                    <form action="/projects/leave/{{ project.id }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            leave
+                        </button>
+                    </form>
+                    {% else %}
+                    <form action="/projects/join/{{ project.id }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Join
+                        </button>
+                    </form>
+                {% endif %}
                 </div>
                 <table class="table table-striped">
                     <thead>
@@ -101,8 +111,8 @@
                     <tbody>
                         {% for one_member in all_members %}
                         <tr>
-                            <td>{{one_member.user.first_name}}</td>
-                            <td>{{one_member.user.last_name}}</td>
+                            <td>{{project.members.first_name}}</td>
+                            <td>{{project.members.last_name}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
