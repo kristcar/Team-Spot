@@ -2,190 +2,188 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team Spot - Projects</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Spot - Projects</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+  <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-        </script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-        </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+  </script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <nav id="sidebar">
-            <!-- Sidebar Header -->
-            <div class="sidebar-header">
-                <img class="nav-logo" src="{% static '/img/TeamSpotWhiteText.png' %}" alt="Team Spot Logo" />
-            </div>
+  <div class="wrapper">
+    <nav id="sidebar">
+      <!-- Sidebar Header -->
+      <div class="sidebar-header">
+        <img class="nav-logo" src="{% static '/img/TeamSpotWhiteText.png' %}" alt="Team Spot Logo" />
+      </div>
 
 
-            <!-- Sidebar Links -->
-            <ul class="list-unstyled components">
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/inbox">Inbox</a></li>
+      <!-- Sidebar Links -->
+      <ul class="list-unstyled components">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/inbox">Inbox</a></li>
 
-                <li><a href="/open_items">Tasks</a></li>
+        <li><a href="/open_items">Tasks</a></li>
 
-                <li><a href="/chat">Chat</a></li>
-                <li class="active"></li>>><a href="/projects">Projects</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-        </nav>
+        <li><a href="/chat">Chat</a></li>
+        <li class="active"></li>>><a href="/projects">Projects</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
 
-        <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span></span>
-                    </button>
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span></span>
+          </button>
 
-                </div>
-            </nav>
+        </div>
+      </nav>
 
 
-            <div class="content-header">
-                <h1>{{project.project_name}}</h1>
-                <form action="/logout" method="GET">
-                    {% csrf_token %}
-                    <button type="submit" class="logout_btn">Log Out</button>
-                </form>
-            </div>
+      <div class="content-header">
+        <h1>{{project.project_name}}</h1>
+        <form action="/logout" method="GET">
+          {% csrf_token %}
+          <button type="submit" class="logout_btn">Log Out</button>
+        </form>
+      </div>
 
-            <div>
-              <h2>Members</h2>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for user in all_users %}
-                    {% if user in project.members.all %}
-                      <tr>
-                        <td>{{user.first_name}}</td> 
-                        <td>{{user.last_name}}</td>
-                      </tr>
-                    {% endif %}
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
+      <div>
+        <h2>Members</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in all_users %}
+            {% if user in project.members.all %}
+            <tr>
+              <td>{{user.first_name}}</td>
+              <td>{{user.last_name}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
-            <h2>Open Tasks for {{one_project.project_name}}</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th>Title</th>
-                  <th>Creator</th>
-                  <th>Assigned To</th>
-                  <th>Date Created</th>
-                  <th>Due Date</th>
-                </tr>
-              </thead>
-              <tbody> 
-                {% for one_task in all_tasks %}
-                  {% if one_task.project.id == one_project.id %}  
-                    {% if one_task.response == "" %}
-                      <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
-                        <td>{{one_task.project.project_name}}</td>
-                        <td>{{one_task.title}}</td>
-                        <td>
-                          {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                        </td>
-                        <td>
-                          {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
-                        </td>
-                        <td>{{one_task.created_at}}</td>
-                        <td>{{one_task.due_date}}</td>
-                      </tr>
-                    {% endif %}
-                  {% endif %}
-                {% endfor %}
-              </tbody>
-            </table>
-    
-            <h2 class = "mt-5">Closed Tasks for {{one_project.project_name}}</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th>Title</th>
-                  <th>Creator</th>
-                  <th>Assigned To</th>
-                  <th>Date Created</th>
-                  <th>Due Date</th>
-                  <th>Completed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for one_task in all_tasks %}
-                  {% if one_task.project.id == one_project.id %} 
-                    {% if one_task.response != "" %}
-                      <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
-                        <td>{{one_task.project.project_name}}</td>
-                        <td>{{one_task.title}}</td>
-                        <td>
-                          {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                        </td>
-                        <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
-                        <td>{{one_task.created_at}}</td>
-                        <td>{{one_task.due_date}}</td>
-                        <td>{{one_task.updated_at}}</td>
-                      </tr>
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                </tbody>
-              </table>
-    
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous">
-                </script>
-            <!-- Popper.JS -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-                integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-                crossorigin="anonymous">
-                </script>
-            <!-- Bootstrap JS -->
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-                integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-                crossorigin="anonymous">
-                </script>
+      <h2>Open Tasks for {{one_project.project_name}}</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Assigned To</th>
+            <th>Date Created</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one_task in all_tasks %}
+          {% if one_task.project.id == one_project.id %}
+          {% if one_task.response == "" %}
+          <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
+            <td>{{one_task.project.project_name}}</td>
+            <td>{{one_task.title}}</td>
+            <td>
+              {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+            </td>
+            <td>
+              {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+            </td>
+            <td>{{one_task.created_at}}</td>
+            <td>{{one_task.due_date}}</td>
+          </tr>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
 
-            <script type="text/javascript">
-                $(document).ready(function () {
+      <h2 class="mt-5">Closed Tasks for {{one_project.project_name}}</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Assigned To</th>
+            <th>Date Created</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one_task in all_tasks %}
+          {% if one_task.project.id == one_project.id %}
+          {% if one_task.response != "" %}
+          <tr class='clickable-row' data-href='/open_items/item_page/{{one_task.id}}'>
+            <td>{{one_task.project.project_name}}</td>
+            <td>{{one_task.title}}</td>
+            <td>
+              {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+            </td>
+            <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
+            <td>{{one_task.created_at}}</td>
+            <td>{{one_task.due_date}}</td>
+            <td>{{one_task.updated_at}}</td>
+          </tr>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
 
-                    $('#sidebarCollapse').on('click', function () {
-                        $('#sidebar').toggleClass('active');
-                    });
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+      </script>
+      <!-- Popper.JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+      </script>
+      <!-- Bootstrap JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+      </script>
 
-                });
-            </script>
+      <script type="text/javascript">
+        $(document).ready(function () {
 
-            <script>
-              jQuery(document).ready(function ($) {
-                $(".clickable-row").click(function () {
-                  window.location = $(this).data("href");
-                });
-              });
-            </script>
+          $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+          });
+
+        });
+      </script>
+
+      <script>
+        jQuery(document).ready(function ($) {
+          $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+          });
+        });
+      </script>
 </body>
 
 </html>

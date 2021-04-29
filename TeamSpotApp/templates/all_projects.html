@@ -12,6 +12,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -78,32 +79,37 @@
                     <h4><a href="/projects/{{ project.id }}">{{ project.project_name }}</a></h4>
                     <!-- Functionality that the creator can delete -->
 
+                    <div class="proj-btns">
+                        {% if project.creator.id == request.session.user_id %}
+                        <form action="/projects/delete/{{project.id}}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">
+                                Delete this Project
+                            </button>
+                        </form>
+                        {% endif %}
 
-                    {% if project.creator.id == request.session.user_id %}
-                    <form action="/projects/delete/{{project.id}}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            Delete
-                        </button>
-                    </form>
-                    {% endif %}
-
-                    {% if current_user not in project.members.all %}
-                    <form action="/projects/join/{{project.id}}" , method="POST">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-success btn-sm">
-                        Join
-                      </button>
-                    </form>
-                    {% else %}
-                    <form action="/projects/leave/{{project.id}}", method="POST">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-info btn-sm">
-                        Leave
-                      </button>
-                    </form>
-                    {% endif %}
-
+                        {% if current_user not in project.members.all %}
+                        <div class="join-btn">
+                            <form action="/projects/join/{{project.id}}" , method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="chat-btn">
+                                    Join this Project
+                                </button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <form action="/projects/leave/{{project.id}}" , method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="chat-btn">
+                                Leave this Project
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <!-- <p>Members: {{ project.members.count }}</p>
+                    <p>{{project.description}}</p> -->
+                    
 
                     <!-- {% if user in projects.members.all %}
                     <form action="/projects/leave/{{ project.id }}" method="POST">
@@ -121,6 +127,7 @@
                     </form>
                     {% endif %} -->
                 </div>
+                
                 <!-- <table class="table table-striped">
                     <thead>
                         <tr>
@@ -139,8 +146,7 @@
                 </table> -->
                 <p>Members: {{ project.members.count }}</p>
                 <p>{{project.description}}</p>
-                {% endfor %}
-
+                {% endfor %} 
 
                 <!-- NOTE FROM BRENDEN: Below is the code that was in here to loop through all projects as one table. If anything I think we should do each project as it's own block with a table of members. -->
                 <!-- {% for one_project in all_projects %}
@@ -191,4 +197,5 @@
         </div>
     </div>
 </body>
+
 </html>

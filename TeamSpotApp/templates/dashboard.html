@@ -12,13 +12,14 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+  <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
     integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-    </script>
+  </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
     integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-    </script>
+  </script>
 </head>
 
 <body>
@@ -76,76 +77,81 @@
       </div>
       <br>
 
-      
+
       <div class="sub-content">
+        
+          <h3>To Do</h3>
+          <br>
+          <a href="/inbox">
+            <!-- <p>You have {{current_user.assigned_task.count}} tasks assigned to you.</p> -->
+            <p>Check open tasks assigned to you.</p>
+          </a>
+          <br>
+          <br>
+        
 
-        <h3>To Do</h3>
-        <br>
-        <a href = "/inbox">
-          <!-- <p>You have {{current_user.assigned_task.count}} tasks assigned to you.</p> -->
-          <p>Check open tasks assigned to you.</p>
-        </a>
-        <br>
-        <br>
-
-        <h3>My Projects</h3>
-        <table class="table table-striped">
-          <!-- <thead>
+        <div class="sep">
+          <h3>My Projects</h3>
+          <table class="table table-striped">
+            <!-- <thead>
             <tr>
               <th>
                 Name:
               </th>
             </tr>
           </thead> -->
-          <tbody>
-            {% for one_project in all_projects %}
+            <tbody>
+              {% for one_project in all_projects %}
               {% if current_user in one_project.members.all %}
-                <tr class='clickable-row' data-href='projects/{{one_project.id}}'>
-                  <td>
-                    {{one_project.project_name}}
-                  </td>          
-                </tr>
+              <tr class='clickable-row' data-href='projects/{{one_project.id}}'>
+                <td>
+                  {{one_project.project_name}}
+                </td>
+              </tr>
               {% endif %}
-            {% endfor %}    
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <br>
+        </div>
+        <div class="sep">
+        <h3>My Tasks</h3>
+        <br>
+        <h4>Open Tasks You Created</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Title</th>
+              <th>Creator</th>
+              <th>Assigned To</th>
+              <th>Date Created</th>
+              <th>Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for one_task in all_tasks %}
+            {% if one_task.response == "" %}
+            {% if one_task.creator == current_user %}
+            <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+              <td>{{one_task.project.project_name}}</td>
+              <td>{{one_task.title}}</td>
+              <td>
+                {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+              </td>
+              <td>
+                {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+              </td>
+              <td>{{one_task.created_at}}</td>
+              <td>{{one_task.due_date}}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
           </tbody>
         </table>
-      
-      <br>
-      <h3>My Tasks</h3>
-      <br>
-      <h4>Open Tasks You Created</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Title</th>
-            <th>Creator</th>
-            <th>Assigned To</th>
-            <th>Date Created</th>
-            <th>Due Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for one_task in all_tasks %}
-            {% if one_task.response == "" %}
-              {% if one_task.creator == current_user %}
-                <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                  <td>{{one_task.project.project_name}}</td>
-                  <td>{{one_task.title}}</td>
-                  <td>
-                    {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                  </td>
-                  <td>
-                    {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
-                  </td>
-                  <td>{{one_task.created_at}}</td>
-                  <td>{{one_task.due_date}}</td>
-                </tr>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
+      </div>
 
       <h4>Closed Tasks You Created</h4>
       <table class="table table-striped">
@@ -161,55 +167,56 @@
         </thead>
         <tbody>
           {% for one_task in all_tasks %}
-            {% if one_task.response != "" %}
-              {% if one_task.creator == current_user %}
-                <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                  <td>{{one_task.project.project_name}}</td>
-                  <td>{{one_task.title}}</td>
-                  <td>
-                    {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                  </td>
-                  <td>
-                    {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
-                  </td>
-                  <td>{{one_task.created_at}}</td>
-                  <td>{{one_task.due_date}}</td>
-                </tr>
-              {% endif %}
-            {% endif %}
+          {% if one_task.response != "" %}
+          {% if one_task.creator == current_user %}
+          <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+            <td>{{one_task.project.project_name}}</td>
+            <td>{{one_task.title}}</td>
+            <td>
+              {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+            </td>
+            <td>
+              {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+            </td>
+            <td>{{one_task.created_at}}</td>
+            <td>{{one_task.due_date}}</td>
+          </tr>
+          {% endif %}
+          {% endif %}
           {% endfor %}
         </tbody>
       </table>
     </div>
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-        </script>
-      <!-- Popper.JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
-        </script>
-      <!-- Bootstrap JS -->
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
-        </script>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
 
-      <script type="text/javascript">
-        $(document).ready(function () {
+    <script type="text/javascript">
+      $(document).ready(function () {
 
-          $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-          });
-
+        $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
         });
-      </script>
-      
-      <script>
-        jQuery(document).ready(function ($) {
-          $(".clickable-row").click(function () {
-            window.location = $(this).data("href");
-          });
+
+      });
+    </script>
+
+    <script>
+      jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+          window.location = $(this).data("href");
         });
-      </script>
+      });
+    </script>
 </body>
 
 </html>

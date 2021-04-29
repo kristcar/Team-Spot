@@ -12,6 +12,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -99,7 +100,7 @@
                             Join
                         </button>
                     </form>
-                {% endif %}
+                    {% endif %}
                 </div>
                 <table class="table table-striped">
                     <thead>
@@ -122,27 +123,7 @@
                 {% endfor %}
 
 
-                <!-- NOTE FROM BRENDEN: Below is the code that was in here to loop through all projects as one table. If anything I think we should do each project as it's own block with a table of members. -->
-                <!-- {% for one_project in all_projects %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>{{one_project.name}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{one_project.member.name}}<form action="/project/{{ one_project.id }}/remove"
-                                    method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Remove" </form> </td> <!-- Wirefram seems to include the
-                                        creator/lead as one a removable portion -->
-                <!-- We will have to make the creator/lead a member upon creation -->
-                <!-- </tr>
-                    </tbody>
-                </table>
 
-                {% endfor %} -->
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
