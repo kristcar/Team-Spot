@@ -63,7 +63,6 @@ def dashboard(request):
     "current_user": User.objects.get(id = request.session['user_id']),
     "all_projects": Project.objects.all(),
     "all_tasks": Task.objects.all(),
-    "all_projects": Project.objects.all(),
   }
   return render(request, 'dashboard.html', context)
 
@@ -104,7 +103,9 @@ def project_detail(request, project_id):
         'project': one_project,
         "one_project" : Project.objects.get(id=project_id),
         "current_user" : User.objects.filter(id = request.session['user_id']),
-        "all_projects": Project.objects.all()
+        "all_users": User.objects.all(),
+        "all_projects": Project.objects.all(),
+        "all_tasks": Task.objects.all(),
     }
     return render(request, 'one_project.html', context)
 
@@ -115,7 +116,8 @@ def joinProject(request, project_id):
         one_project = Project.objects.get(id=project_id)
         this_user = User.objects.get(id=request.session["user_id"])
         one_project.members.add(this_user)
-    return redirect(f'/projects/{project_id}')
+        return redirect('/projects')
+    # return redirect(f'/projects/{project_id}')
 
 def leaveProject(request, project_id):
     if 'user_id' not in request.session:
@@ -124,7 +126,7 @@ def leaveProject(request, project_id):
         one_project = Project.objects.get(id=project_id)
         this_user = User.objects.get(id=request.session["user_id"])
         one_project.members.remove(this_user)
-    return redirect('/dashboard')
+    return redirect('/projects')
 
 def deleteProject(request, project_id):
     if 'user_id' not in request.session:

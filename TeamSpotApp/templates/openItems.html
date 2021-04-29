@@ -56,7 +56,7 @@
 
       <div class="content-header">
         <h2>Tasks</h2>
-        <h2>Welcome, {{current_user.first_name}}!</h2>
+        <!-- <h2>Welcome, {{current_user.first_name}}!</h2> -->
 
         <form action="/logout" method="GET">
           {% csrf_token %}
@@ -76,9 +76,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {% for project in all_projects %}
-
+              {% if current_user in project.members.all %}
                 <a class="dropdown-item" href="open_items/add_new_item/{{project.id}}">{{project.project_name}}</a>
-
+              {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -100,39 +100,39 @@
           <tbody>
             {% for one_task in all_tasks %}
               {% if one_task.response == "" %}
-
-              <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                <td>{{one_task.project.project_name}}</td>
-                <td>{{one_task.title}}</td>
-                <td>
-                  {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                </td>
-                <td>
-                  {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
-                </td>
-                <td>{{one_task.created_at}}</td>
-                <td>{{one_task.due_date}}</td>
-                <td>
-                  {% if one_task.response == "" %}
-                  Open
-                  {% else %}
-                  Closed
+                {% if current_user in one_task.project.members.all %}
+                  <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                    <td>{{one_task.project.project_name}}</td>
+                    <td>{{one_task.title}}</td>
+                    <td>
+                      {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                    </td>
+                    <td>
+                      {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+                    </td>
+                    <td>{{one_task.created_at}}</td>
+                    <td>{{one_task.due_date}}</td>
+                    <td>
+                      {% if one_task.response == "" %}
+                      Open
+                      {% else %}
+                      Closed
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if current_user == one_task.creator %}
+                      <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          Delete
+                        </button>
+                      </form>
+                      {% endif %}
+                    </td>
+                  </tr>
                   {% endif %}
-                </td>
-                <td>
-                  {% if current_user == one_task.creator %}
-                  <form action="/open_items/delete/{{one_task.id}}" , method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm">
-                      Delete
-                    </button>
-                  </form>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endif %}
-
-            {% endfor %}
+                {% endif %}
+              {% endfor %}
           </tbody>
         </table>
 
@@ -151,24 +151,23 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
-
-
               {% if one_task.response != "" %}
+                {% if current_user in one_task.project.members.all %}
+                  <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                    <td>{{one_task.project.project_name}}</td>
 
-              <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                <td>{{one_task.project.project_name}}</td>
-
-                <td>{{one_task.title}}</td>
-                <td>
-                  {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                </td>
-                <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
-                <td>{{one_task.created_at}}</td>
-                <td>{{one_task.due_date}}</td>
-                <td>{{one_task.updated_at}}</td>
-                
-              </tr>
-              {% endif %}
+                    <td>{{one_task.title}}</td>
+                    <td>
+                      {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                    </td>
+                    <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
+                    <td>{{one_task.created_at}}</td>
+                    <td>{{one_task.due_date}}</td>
+                    <td>{{one_task.updated_at}}</td>
+                    
+                  </tr>
+                  {% endif %}
+                {% endif %}
               {% endfor %}
             </tbody>
           </table>

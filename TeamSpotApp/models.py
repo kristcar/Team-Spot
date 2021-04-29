@@ -127,7 +127,7 @@ class Project(models.Model):
 class TaskManager(models.Manager):
   def task_validator(self, postData):
     errors = {}
-    if len(postData['title']) < 8 or len(postData['description']) < 8:
+    if len(postData['title']) < 4 or len(postData['description']) < 4:
       errors['task_description_short'] = "Task title or description is too short"
     if postData["due_date"] < datetime.now().strftime("%Y-%m-%d"):
       errors["due_date_past"] = "Please select a due date in the future"

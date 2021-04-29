@@ -99,39 +99,6 @@
                 </tbody>
               </table>
 
-              <h2>Open Tasks You Created</h2>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Project</th>
-                    <th>Title</th>
-                    <th>Creator</th>
-                    <th>Assigned To</th>
-                    <th>Date Created</th>
-                    <th>Due Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for one_task in all_tasks %}
-                    {% if one_task.response == "" %}
-                      {% if one_task.creator == current_user %}
-                        <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
-                          <td>{{one_task.project.project_name}}</td>
-                          <td>{{one_task.title}}</td>
-                          <td>
-                            {{one_task.creator.first_name}} {{one_task.creator.last_name}}
-                          </td>
-                          <td>
-                            {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
-                          </td>
-                          <td>{{one_task.created_at}}</td>
-                          <td>{{one_task.due_date}}</td>
-                        </tr>
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                </tbody>
-              </table>
 
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
