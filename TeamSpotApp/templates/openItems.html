@@ -12,6 +12,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+  <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
     integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -71,25 +72,26 @@
         </a> -->
 
         <div class="dropdown show">
-          <a class="btn btn-primary dropdown-toggle" href="open_items/add_new_item/{{project.id}}" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="btn btn-primary dropdown-toggle" href="open_items/add_new_item/{{project.id}}" role="button"
+            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Create New Task
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {% for project in all_projects %}
-              {% if current_user in project.members.all %}
-                <a class="dropdown-item" href="open_items/add_new_item/{{project.id}}">{{project.project_name}}</a>
-              {% endif %}
+            {% if current_user in project.members.all %}
+            <a class="dropdown-item" href="open_items/add_new_item/{{project.id}}">{{project.project_name}}</a>
+            {% endif %}
             {% endfor %}
           </div>
         </div>
-        
+
         <h2>Open Tasks</h2>
         <table class="table table-striped">
           <thead>
             <tr>
               <th>Project</th>
               <th>Title</th>
-              <th>Creator</th> 
+              <th>Creator</th>
               <th>Assigned To</th>
               <th>Date Created</th>
               <th>Due Date</th>
@@ -99,6 +101,7 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
+
               {% if one_task.response == "" %}
                 {% if current_user in one_task.project.members.all %}
                   <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
@@ -131,12 +134,46 @@
                     </td>
                   </tr>
                   {% endif %}
+
+<!--             {% if one_task.response == "" %}
+            {% if current_user in one_task.project.members.all %}
+            <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+              <td>{{one_task.project.project_name}}</td>
+              <td>{{one_task.title}}</td>
+              <td>
+                {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+              </td>
+              <td>
+                {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+              </td>
+              <td>{{one_task.created_at}}</td>
+              <td>{{one_task.due_date}}</td>
+              <td>
+                {% if one_task.response == "" %}
+                Open
+                {% else %}
+                Closed -->
+
                 {% endif %}
-              {% endfor %}
+              </td>
+              <td>
+                {% if current_user == one_task.creator %}
+                <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn">
+                    Delete
+                  </button>
+                </form>
+                {% endif %}
+              </td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
           </tbody>
         </table>
 
-        <h2 class = "mt-5">Closed Tasks</h2>
+        <h2 class="mt-5">Closed Tasks</h2>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -151,6 +188,7 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
+
               {% if one_task.response != "" %}
                 {% if current_user in one_task.project.members.all %}
                   <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
@@ -183,39 +221,61 @@
             </tbody>
           </table>
 
-        </div>
+<!--             {% if one_task.response != "" %}
+            {% if current_user in one_task.project.members.all %}
+            <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+              <td>{{one_task.project.project_name}}</td>
+
+              <td>{{one_task.title}}</td>
+              <td>
+                {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+              </td>
+              <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
+              <td>{{one_task.created_at}}</td>
+              <td>{{one_task.due_date}}</td>
+              <td>{{one_task.updated_at}}</td> -->
+
+
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+
       </div>
+    </div>
 
 
 
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-      </script>
-      <!-- Popper.JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
-      </script>
-      <!-- Bootstrap JS -->
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
-      </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
 
-      <script type="text/javascript">
-        $(document).ready(function () {
+    <script type="text/javascript">
+      $(document).ready(function () {
 
-          $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-          });
-
+        $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
         });
-      </script>
-      <script>
-        jQuery(document).ready(function ($) {
-          $(".clickable-row").click(function () {
-            window.location = $(this).data("href");
-          });
+
+      });
+    </script>
+    <script>
+      jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+          window.location = $(this).data("href");
         });
-      </script>
+      });
+    </script>
 </body>
 
 </html>

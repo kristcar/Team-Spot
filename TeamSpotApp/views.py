@@ -6,6 +6,7 @@ from django.db.models import Count
 from .forms import *
 from datetime import datetime, timedelta
 
+
 #************************LOGIN AND REGISTRATION********************
 
 def loginRegister(request):

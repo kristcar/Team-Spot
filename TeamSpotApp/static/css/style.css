@@ -373,7 +373,7 @@ i a {
   color: #3445b4;
 }
 
-.form-messages input {
+.form-messages input, .response-area {
   margin: 10px 0;
   width: 100%;
   padding: 10px;
@@ -409,4 +409,46 @@ h3, h4 {
   display: flex;
   justify-content: space-around;
   margin: 20px auto;
+  border-top: 1px solid #46bff1;
+  padding: 10px 0px;
+}
+
+.proj-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 325px;
+}
+
+.join-btn {
+  margin: auto;
+}
+
+.delete-btn {
+  background-color: #e40b3b;
+  color: #fff;
+  padding: 3px;
+  margin: 2px;
+  border: 1px solid #e40b3b;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+span {
+  font-weight: bold;
+  font-size: 13pt;
+}
+
+
+.btn-primary, .show>.btn-primary.dropdown-toggle {
+  background-color: #46bff1;
+  border-color: #46bff1;
+  color: #fff;
+  padding: 3px;
+  margin: 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.sep {
+  border-top: 1px solid #46bff1;
 }

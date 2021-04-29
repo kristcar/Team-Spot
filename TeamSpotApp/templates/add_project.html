@@ -12,6 +12,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
         integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -58,24 +59,25 @@
                 </form>
             </div>
 
-            
+
             <div id="" class="">
-              {% if messages %}
-              <class="messages">
-                <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id="login_alert" role="alert">
-                  <strong>An error has occurred:</strong>
-                  {% for message in messages %}
-                  <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                    {{ message }}
-                  </p>
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  {% endfor %}
-                </div>
-                {% endif %}
+                {% if messages %}
+                <class="messages">
+                    <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id="login_alert"
+                        role="alert">
+                        <strong>An error has occurred:</strong>
+                        {% for message in messages %}
+                        <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                            {{ message }}
+                        </p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
             </div>
-      
+
 
             <div class="sub-content">
                 <div>

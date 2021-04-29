@@ -12,6 +12,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="{% static '/img/TeamSpotwhiteText.png' %}" rel="Team Spot Logo" />
+  <link rel="shortcut icon" type="image/png" href="{% static '/img/faviconTS.png' %}" />
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
     integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
@@ -87,8 +88,8 @@
         <div class="messages">
           <p><strong>{{message.message}}</p></strong>
           <p><i>
-              Posted by: <a href="/profile/{{message.poster.id}}"> {{message.poster.first_name}}
-                {{message.poster.last_name}}</a> on
+              Posted by: <span>{{message.poster.first_name}}
+                {{message.poster.last_name}} </span>on
               {{message.created_at}}
           </p></i>
         </div>
