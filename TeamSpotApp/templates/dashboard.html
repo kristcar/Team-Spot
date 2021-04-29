@@ -88,21 +88,21 @@
 
 
 <div class="sep">
-        <h3>My Projects</h3>
-        <table class="table table-striped">
+        <h3>My Projects</h3><br>
+        <!-- <table class="table table-striped"> -->
 
-          <tbody>
+          <!-- <tbody> -->
             {% for one_project in all_projects %}
             {% if current_user in one_project.members.all %}
-            <tr class='clickable-row' data-href='projects/{{one_project.id}}'>
-              <td>
+            <h6><a href="projects/{{one_project.id}}">{{one_project.project_name}}</a></h6><br>
+              <!-- <td>
                 {{one_project.project_name}}
               </td>
-            </tr>
+            </tr> -->
             {% endif %}
             {% endfor %}
-          </tbody>
-        </table>
+          <!-- </tbody>
+        </table> -->
 
       </div>
         <div class="sep">
