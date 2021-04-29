@@ -64,10 +64,6 @@
                 </form>
             </div>
 
-
-
-
-
             <div class="sub-content">
                 <a href="/add_project">
                     <button class="chat-btn">Create A New Project</button>
@@ -89,7 +85,6 @@
                             Delete
                         </button>
                     </form>
-                    {% endif %}
                     {% if user in projects.members.all %}
                     <form action="/projects/leave/{{ project.id }}" method="POST">
                         {% csrf_token %}
@@ -104,7 +99,7 @@
                             Join
                         </button>
                     </form>
-                    {% endif %}
+                {% endif %}
                 </div>
                 <table class="table table-striped">
                     <thead>
