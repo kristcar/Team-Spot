@@ -141,10 +141,7 @@ class Task(models.Model):
   response = models.CharField(max_length = 1000, default = "", blank = True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now = True)
-  
   assigned_to = models.ForeignKey(User, related_name = "assigned_task", on_delete = models.CASCADE, blank = True, null = True)
-  # assigned_to = forms.ChoiceField();
-
   project = models.ForeignKey(Project, related_name = "project_task", on_delete = models.CASCADE, blank =True, null = True)
   objects = TaskManager()
 #***************************** END ACTION ITEM **********************************#
