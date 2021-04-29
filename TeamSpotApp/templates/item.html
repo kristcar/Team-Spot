@@ -112,34 +112,20 @@
           {% if one_task.response != "" %}
             <h3>Response:</h3>
               <p>{{one_task.response}}</p>
-              <p>Response by: {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}} on {{one_task.updated_at}}</p>
-
-<!--           {% if one_task.response == "" %}
-          <h3>Respond:</h3>
-
-          <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
-            {% csrf_token %}
-            <input type="textarea" name="response" class="response-area">
-            <button class="chat-btn" type="submit">Submit</button>
-          </form>
-          {% else %}
-          <h3>Response:</h3>
-          <p>{{one_task.response}}</p>
-          <p>{{one_task.updated_at}}</p>
-          {% endif %} -->
+              <p><i>Response by: {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}} on {{one_task.updated_at}}</i></p>
 
           {% endif %}
         </div>
 
         {% if current_user == one_task.creator %}
-        {% if one_task.response == "" %}
-        <form action="/open_items/delete/{{one_task.id}}" , method="POST">
-          {% csrf_token %}
-          <button type="submit" class="delete-btn">
-            Delete
-          </button>
-        </form>
-        {% endif %}
+          {% if one_task.response == "" %}
+          <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">
+              Delete
+            </button>
+          </form>
+          {% endif %}
         {% endif %}
 
       </div>

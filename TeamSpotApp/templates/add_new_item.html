@@ -76,7 +76,6 @@
       </div>
 
 
-
       <h2>Add New Task</h2>
 
       <div class="sub-content">
@@ -104,11 +103,11 @@
               <label for="assigned_to">Assigned To</label>
               <select id="select_assigned" name="assigned_to" class="form-control" />
               {% for user in all_users %}
-              {% if user in one_project.members.all %}
-              <option value="{{user.id}}">
-                {{user.first_name}} {{user.last_name}}
-              </option>
-              {% endif %}
+                {% if user in one_project.members.all %}
+                <option value="{{user.id}}">
+                  {{user.first_name}} {{user.last_name}}
+                </option>
+                {% endif %}
               {% endfor %}
               </select>
             </div>
@@ -118,23 +117,6 @@
             </div>
             <button type="submit" class="btn btn-primary mb-3">Submit</button>
         </form>
-
-        <!-- <div class = "form-group">
-      <label for = "project_user_assign">Assign to:</label>
-      <select name = "project_user_options">
-        {% for project in all_projects %}
-        <optgroup label = "{{project.name}}">
-          {% for user in all_users %}
-            {% if user in project.members %}
-              <option value="{{user.id}}">
-                {{user.first_name}} {{user.last_name}}
-              </option>
-            {% endif %}
-          {% endfor %}
-        </optgroup>
-        {% endfor %}
-      </select>
-    </div> -->
       </div>
 
 
