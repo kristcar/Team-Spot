@@ -66,9 +66,22 @@
 
       <div class="sub-content">
 
-        <a href="open_items/add_new_item">
+        <!-- <a href="open_items/add_new_item">
           <button class="chat-btn">Create New Task</button>
-        </a>
+        </a> -->
+
+        <div class="dropdown show">
+          <a class="btn btn-primary dropdown-toggle" href="open_items/add_new_item/{{project.id}}" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Create New Task
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {% for project in all_projects %}
+
+                <a class="dropdown-item" href="open_items/add_new_item/{{project.id}}">{{project.project_name}}</a>
+
+            {% endfor %}
+          </div>
+        </div>
         
         <h2>Open Tasks</h2>
         <table class="table table-striped">
@@ -76,7 +89,7 @@
             <tr>
               <th>Project</th>
               <th>Title</th>
-              <th>Creator</th>
+              <th>Creator</th> 
               <th>Assigned To</th>
               <th>Date Created</th>
               <th>Due Date</th>

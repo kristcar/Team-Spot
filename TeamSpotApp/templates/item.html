@@ -56,18 +56,20 @@
 
       <div class="content-header">
         <h2>Item</h2>
-        <h2>Welcome, {{current_user.first_name}}!</h2>
-
+        <a href = "/open_items">
+          <button class = "btn btn-primary">Back</button>
+        </a>  
         <form action="/logout" method="GET">
           {% csrf_token %}
           <button type="submit" class="logout_btn">Log Out</button>
         </form>
       </div>
 
-      <div class="sub-content">
 
+      <div class="sub-content">
+        <h3>{{one_task.project.project_name}}</h3>
         <div class="ind-item">
-          <h3>{{one_task.title}}</h3>
+          <h4>{{one_task.title}}</h4>
           <h5>{{one_task.description}}</h5>
         </div>
 
@@ -87,6 +89,15 @@
           <p>{{one_task.updated_at}}</p>
           {% endif %}
         </div>
+
+        {% if current_user == one_task.creator %}
+          <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">
+              Delete
+            </button>
+          </form>
+        {% endif %}
       </div>
 
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

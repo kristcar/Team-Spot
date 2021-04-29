@@ -217,6 +217,7 @@ def item_page(request, task_ID):
     context = {
       "all_tasks": Task.objects.all(),
       "one_task": Task.objects.get(id = task_ID),
+      "all_projects": Project.objects.all(),
       "current_user": User.objects.get(id = request.session['user_id'])
     }
     return render(request, 'item.html', context)
@@ -224,25 +225,26 @@ def item_page(request, task_ID):
     messages.error(request, "Please log in or register")
     return redirect('/')
 
-def add_new_item(request):
+def add_new_item(request, project_ID):
   if "user_id" in request.session: 
     context = {
       "current_user": User.objects.get(id = request.session['user_id']),
       "all_users": User.objects.all(),
       "all_projects": Project.objects.all(),
+      "one_project": Project.objects.get(id = project_ID)
     }
     return render(request, 'add_new_item.html', context)
   else:
     messages.error(request, "Please log in or register")
     return redirect('/')  
 
-def create_action_item(request):
+def create_action_item(request, project_ID):
   if request.method == "POST":
     errors = Task.objects.task_validator(request.POST)
     if len(errors) > 0:
       for key, value in errors.items():
         messages.error(request, value)
-      return redirect('/open_items/add_new_item')
+      return redirect(f'/open_items/add_new_item/{project_ID}')
     else:
       task = Task.objects.create(
         creator = User.objects.get(id = request.session['user_id']),   
