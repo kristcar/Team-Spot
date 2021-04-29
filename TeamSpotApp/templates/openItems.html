@@ -101,7 +101,41 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
-            {% if one_task.response == "" %}
+
+              {% if one_task.response == "" %}
+                {% if current_user in one_task.project.members.all %}
+                  <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                    <td>{{one_task.project.project_name}}</td>
+                    <td>{{one_task.title}}</td>
+                    <td>
+                      {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                    </td>
+                    <td>
+                      {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}
+                    </td>
+                    <td>{{one_task.created_at | date:"M d, Y" }}</td>
+                    <td>{{one_task.due_date | date:"M d, Y" }}</td>
+                    <td>
+                      {% if one_task.response == "" %}
+                      Open
+                      {% else %}
+                      Closed
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if current_user == one_task.creator %}
+                      <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          Delete
+                        </button>
+                      </form>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+<!--             {% if one_task.response == "" %}
             {% if current_user in one_task.project.members.all %}
             <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
               <td>{{one_task.project.project_name}}</td>
@@ -118,7 +152,8 @@
                 {% if one_task.response == "" %}
                 Open
                 {% else %}
-                Closed
+                Closed -->
+
                 {% endif %}
               </td>
               <td>
@@ -153,7 +188,40 @@
           </thead>
           <tbody>
             {% for one_task in all_tasks %}
-            {% if one_task.response != "" %}
+
+              {% if one_task.response != "" %}
+                {% if current_user in one_task.project.members.all %}
+                  <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
+                    <td>{{one_task.project.project_name}}</td>
+
+                    <td>{{one_task.title}}</td>
+                    <td>
+                      {{one_task.creator.first_name}} {{one_task.creator.last_name}}
+                    </td>
+                    <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
+                    <td>{{one_task.created_at  | date:"M d, Y" }}</td>
+                    <td>{{one_task.due_date  | date:"M d, Y" }}</td>
+                    <td>{{one_task.updated_at  | date:"M d, Y" }}</td>
+                    
+                    <td>
+                      {% if current_user == one_task.creator %}
+                      <form action="/open_items/delete/{{one_task.id}}" , method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          Delete
+                        </button>
+                      </form>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+
+<!--             {% if one_task.response != "" %}
             {% if current_user in one_task.project.members.all %}
             <tr class='clickable-row' data-href='open_items/item_page/{{one_task.id}}'>
               <td>{{one_task.project.project_name}}</td>
@@ -165,7 +233,8 @@
               <td>{{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</td>
               <td>{{one_task.created_at}}</td>
               <td>{{one_task.due_date}}</td>
-              <td>{{one_task.updated_at}}</td>
+              <td>{{one_task.updated_at}}</td> -->
+
 
             </tr>
             {% endif %}

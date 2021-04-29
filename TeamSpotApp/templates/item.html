@@ -68,19 +68,53 @@
         </div>
       </div>
 
+      <div id="" class="">
+        {% if messages %}
+        <class="messages">
+          <div class="alert alert-primary alert-dismissible fade show mt-2 ml-4" id="login_alert" role="alert">
+            <strong>An error has occurred:</strong>
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+              {{ message }}
+            </p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {% endfor %}
+          </div>
+          {% endif %}
+      </div>
 
       <div class="sub-content">
         <h3>{{one_task.project.project_name}}</h3>
         <div class="ind-item">
           <h4>{{one_task.title}}</h4>
           <h5>{{one_task.description}}</h5>
+          <h6>Task Created on {{one_task.created_at  | date:"M d, Y" }} by {{one_task.creator.first_name}} {{one_task.creator.last_name}}</h6>
+          <h6>Task Assigned To: {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}}</h6>
+          <h6>Due Date: {{one_task.due_date  | date:"M d, Y" }}</h6>
         </div>
 
 
 
         <div>
           {% if one_task.assigned_to == current_user %}
-          {% if one_task.response == "" %}
+
+            {% if one_task.response == "" %}
+            <h3>Respond:</h3>
+            <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
+              {% csrf_token %}
+              <input type="textarea" name="response">
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+            {% endif %}
+          {% endif %}
+          {% if one_task.response != "" %}
+            <h3>Response:</h3>
+              <p>{{one_task.response}}</p>
+              <p>Response by: {{one_task.assigned_to.first_name}} {{one_task.assigned_to.last_name}} on {{one_task.updated_at}}</p>
+
+<!--           {% if one_task.response == "" %}
           <h3>Respond:</h3>
 
           <form action="/open_items/item_page/{{one_task.id}}/post_response" , method="POST">
@@ -92,7 +126,8 @@
           <h3>Response:</h3>
           <p>{{one_task.response}}</p>
           <p>{{one_task.updated_at}}</p>
-          {% endif %}
+          {% endif %} -->
+
           {% endif %}
         </div>
 
