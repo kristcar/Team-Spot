@@ -136,7 +136,7 @@ def deleteProject(request, project_id):
     if request.method == "POST":
         to_delete = Project.objects.get(id=project_id)
         to_delete.delete()
-    return redirect('/dashboard')
+    return redirect('/projects')
 
 def all_projects(request):
   if 'user_id' not in request.session:
