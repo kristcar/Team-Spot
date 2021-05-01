@@ -166,7 +166,7 @@
                     <td>{{one_task.created_at  | date:"M d, Y" }}</td>
                     <td>{{one_task.due_date  | date:"M d, Y" }}</td>
                     <td>{{one_task.updated_at  | date:"M d, Y" }}</td>
-                    <td>
+                    <!-- <td>
                       {% if current_user == one_task.creator %}
                       <form action="/open_items/delete/{{one_task.id}}" , method="POST">
                         {% csrf_token %}
@@ -175,7 +175,7 @@
                         </button>
                       </form>
                       {% endif %}
-                    </td>
+                    </td> -->
                   </tr>
                 {% endif %}
               {% endif %}
